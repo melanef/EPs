@@ -180,6 +180,11 @@ TipoApontador existeERetornaAresta(int v1, int v2, TipoGrafo *grafo);
 TipoLista *criaLista();
 
 /*
+  int contaLista(TipoLista *lista): conta elementos numa lista
+*/
+int contaLista(TipoLista *lista);
+
+/*
   insereOrdenado(int v, TipoLista *lista): insere um elemento na sua posição de acordo com o
   valor indicado
 */
@@ -257,10 +262,20 @@ void imprimeDFS(TipoGrafo *grafo);
 /*
   imprimeConjuntosConectados(TipoGrafo *grafo): imprime os conjuntos conectados encontrados no grafo
 */
-void imprimeConjuntosConectados(TipoGrafo *grafo);
+void imprimeConjuntosConectados(TipoLista *conjuntos);
+
+/*
+  TipoLista *conjuntosConectados(TipoGrafo *grafo): cria uma lista com os conjuntos conectados do grafo
+*/
+TipoLista *conjuntosConectados(TipoGrafo *grafo);
 
 /*
   visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila):
   percorre o grafo encontrando elementos para os conjuntos conectados
 */
 void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila);
+
+/*
+  TipoLista *verticesDeArticulacao(TipoGrafo *grafo): cria uma lista com os vértices de articulação do grafo
+*/
+TipoLista *verticesDeArticulacao(TipoGrafo *grafo);

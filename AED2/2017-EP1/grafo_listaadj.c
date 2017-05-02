@@ -208,6 +208,18 @@ TipoLista *criaLista()
     return fila;
 }
 
+int contaLista(TipoLista *lista)
+{
+    int c = 0;
+    TipoNo *atual = lista->inicio;
+    while (atual != NULL) {
+        c++;
+        atual = atual->prox;
+    }
+
+    return c;
+}
+
 TipoNo *ultimoNo(TipoLista *fila)
 {
     if (listaVazia(fila)) {
@@ -478,14 +490,14 @@ void imprimeDFS(TipoGrafo *grafo)
     printf("\n");
 }
 
-void imprimeConjuntosConectados(TipoGrafo *grafo)
+TipoLista *conjuntosConectados(TipoGrafo *grafo)
 {
+    TipoLista *conjuntos = criaLista();
+
     TipoCor cores[grafo->numVertices];
     for (int i = 0; i < grafo->numVertices; i++) {
         cores[i] = COR_BRANCO;
     }
-
-    TipoLista *conjuntos = criaLista();
 
     for (int i = 0; i < grafo->numVertices; i++) {
         int atual = i + 1;
@@ -496,17 +508,7 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
         }
     }
 
-    printf("Connected Components:\n");
-    int i = 0;
-    while (!listaVazia(conjuntos)) {
-        TipoLista *endereco = (TipoLista *) (uintptr_t) removeFila(conjuntos);
-        printf("C%d: ", ++i);
-        while (!listaVazia(endereco)) {
-            printf("%d ", removeFila(endereco));
-        }
-
-        printf("\n");
-    }
+    return conjuntos;
 }
 
 void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila) {
@@ -522,4 +524,24 @@ void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoList
             }
         }
     }
+}
+
+void imprimeConjuntosConectados(TipoLista *conjuntos)
+{
+    printf("Connected Components:\n");
+    int i = 0;
+    while (!listaVazia(conjuntos)) {
+        TipoLista *endereco = (TipoLista *) (uintptr_t) removeFila(conjuntos);
+        printf("C%d: ", ++i);
+        while (!listaVazia(endereco)) {
+            printf("%d ", removeFila(endereco));
+        }
+
+        printf("\n");
+    }
+}
+
+TipoLista *verticesDeArticulacao(TipoGrafo *grafo)
+{
+
 }

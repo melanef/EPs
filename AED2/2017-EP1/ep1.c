@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
     imprimeGrafo(grafo);
     imprimeBFS(grafo);
     imprimeDFS(grafo);
-    imprimeConjuntosConectados(grafo);
+    TipoLista *conjuntos = conjuntosConectados(grafo);
+    imprimeConjuntosConectados(conjuntos);
 
     return EXIT_SUCCESS;
 }
