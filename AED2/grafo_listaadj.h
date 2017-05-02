@@ -180,19 +180,25 @@ TipoApontador existeERetornaAresta(int v1, int v2, TipoGrafo *grafo);
 TipoLista *criaLista();
 
 /*
-  insereFila(int v, TipoLista *fila): insere um elemento na fila.
+  insereOrdenado(int v, TipoLista *lista): insere um elemento na sua posição de acordo com o
+  valor indicado
+*/
+void insereOrdenado(int v, TipoLista *lista);
+
+/*
+  insereFila(int v, TipoLista *fila): insere um elemento no fim da fila.
 */
 void insereFila(int v, TipoLista *fila);
 
 /*
-  int removeFila(TipoLista *fila): remove um elemento da fila.
+  int removeFila(TipoLista *fila): remove um elemento do início da fila.
 */
 int removeFila(TipoLista *fila);
 
 /*
-  bool filaVazia(TipoLista *fila): verifica se a fila está vazia
+  bool filaVazia(TipoLista *lista): verifica se a lista está vazia
 */
-bool filaVazia(TipoLista *fila);
+bool listaVazia(TipoLista *lista);
 
 /*
   TipoNo *ultimoNo(TipoLista *fila): percorre a fila até o último nó
@@ -200,29 +206,14 @@ bool filaVazia(TipoLista *fila);
 TipoNo *ultimoNo(TipoLista *fila);
 
 /*
-  void imprimeFila(TipoLista *fila): imprime os elementos da fila
+  void imprimeFila(TipoLista *lista): imprime os elementos da lista
 */
-void imprimeFila(TipoLista *fila);
+void imprimeLista(TipoLista *lista);
 
 /*
-  inserePilha(int v, TipoLista *pilha): insere um elemento na pilha.
+  inserePilha(int v, TipoLista *pilha): insere um elemento no topo da pilha.
 */
 void inserePilha(int v, TipoLista *pilha);
-
-/*
-  bool pilhaVazia(TipoLista *pilha): verifica se a pilha está vazia
-*/
-bool pilhaVazia(TipoLista *pilha);
-
-/*
-  TipoNo *ultimoNo(TipoLista *pilha): percorre a pilha até o último nó
-*/
-TipoNo *topo(TipoLista *pilha);
-
-/*
-  void imprimePilha(TipoLista *pilha): imprime os elementos da pilha
-*/
-void imprimePilha(TipoLista *pilha);
 
 /*
   BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas):
