@@ -1,0 +1,32 @@
+<%= form_for [:admin, @session] do |f| %>
+
+    <% if @session.errors.any? %>
+    <div id="error_explanation">
+        <h2>
+            <%= pluralize(@session.errors.count, "erro") %> impediram esta sessão de ser incluída:
+        </h2>
+        <ul>
+            <% @session.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+    <% end %>
+
+    <p>
+        <%= f.label :sala %>
+        <%= f.select(:room_id, @room_collection) %>
+    </p>
+
+    <p>
+        <%= f.label :filme %>
+        <%= f.collection_select(:movie_id, Movie.all, :id, :name) %>
+    </p>
+
+    <p>
+        <%= f.label :data_e_hora %>
+        <%= f.datetime_local_field :datetime %>
+    </p>
+
+    <p><%= f.submit %></p>
+<% end %>

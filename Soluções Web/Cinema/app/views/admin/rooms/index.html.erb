@@ -1,0 +1,20 @@
+<h1>Salas pertencentes ao Cinema <%= @theater.name %></h1>
+
+<% if @rooms.any? %>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th colspan="3">&nbsp;</th>
+    </tr>
+    <% @rooms.each do |room| %>
+    <tr>
+        <td><%= room.name %></td>
+        <td><%= link_to 'Visualizar', admin_theater_room_path(@theater, room) %></td>
+        <td><%= link_to 'Editar', edit_admin_theater_room_path(@theater, room) %></td>
+        <td><%= link_to 'Remover', admin_theater_room_path(@theater, room), method: :delete, data: { confirm: "Você está prestes a remover definitivamente esta sala.\nVocê tem certeza e deseja prosseguir com esta operação?" } %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Incluir nova', new_admin_theater_room_path %>

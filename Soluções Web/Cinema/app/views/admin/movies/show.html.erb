@@ -1,0 +1,36 @@
+<h1>Exibindo Filme: <%= @movie.name %></h1>
+
+<p>
+    <strong>Sinopse:</strong>
+    <%= @movie.summary %>
+</p>
+
+<p>
+    <strong>Estreia:</strong>
+    <%= @movie.debut.to_date.strftime("%d/%m/%Y") %>
+</p>
+
+<% if @movie.sessions.any? %>
+<table>
+    <tr>
+        <th>Cinema</th>
+        <th>Sala</th>
+        <th>Data</th>
+        <th>Hora</th>
+    </tr>
+    <%
+        @movie.sessions.each do |session|
+            room = Room.find(session.room)
+            theater = Theater.find(room.theater)
+    %>
+    <tr>
+        <td><%= theater.name %></td>
+        <td><%= room.name %></td>
+        <td><%= session.datetime.to_date.strftime("%d/%m/%Y") %></td>
+        <td><%= session.datetime.to_time.strftime("%H:%M") %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Voltar', admin_movies_path %> | <%= link_to 'Editar', edit_admin_movie_path(@movie) %> | <%= link_to 'Editar Sessões', admin_movie_sessions_path(@movie) %>

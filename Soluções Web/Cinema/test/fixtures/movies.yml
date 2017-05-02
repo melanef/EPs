@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  debut: 2014-12-27
+  sumary: MyText
+
+two:
+  name: MyString
+  debut: 2014-12-27
+  sumary: MyText

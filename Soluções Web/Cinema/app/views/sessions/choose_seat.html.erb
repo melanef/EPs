@@ -1,0 +1,25 @@
+<h2>Escolha seu assento</h2>
+<p>
+    <strong>Filme:</strong> <%= @movie.name %>
+</p>
+
+<p>
+    <strong>Sala:</strong> <%= @theater.name %> - <%= @room.name %>
+</p>
+
+<p>
+    <strong>Data:</strong> <%= @session.datetime.strftime("%H:%M - %d/%m/%Y") %>
+</p>
+
+<%= form_for :ticket_seats do |f| %>
+<div id="seat_map">
+    <% (1..@room.rows).each do |row| %>
+    <div id="seat_map-row_<%= row %>">
+        <% (1..@room.seats_per_row).each do |seat| %>
+        <%= f.check_box row.to_s + "," + seat.to_s %>
+        <% end %>
+    </div>
+    <% end %>
+</div>
+<%= f.submit 'Comprar assentos', :class => "button single span-2" %>
+<% end %>

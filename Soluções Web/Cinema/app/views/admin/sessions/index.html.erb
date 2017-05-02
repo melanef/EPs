@@ -1,0 +1,33 @@
+<h1>Sessões</h1>
+
+<% if @sessions.any? %>
+<table>
+    <tr>
+        <th>Cinema</th>
+        <th>Sala</th>
+        <th>Filme</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th colspan="3">&nbsp;</th>
+    </tr>
+    <%
+        @sessions.each do |session|
+            room = Room.find(session.room)
+            theater = Theater.find(room.theater)
+            movie = Movie.find(session.movie)
+    %>
+    <tr>
+        <td><%= theater.name %></td>
+        <td><%= room.name %></td>
+        <td><%= movie.name %></td>
+        <td><%= session.datetime.to_date.strftime("%d/%m/%Y") %></td>
+        <td><%= session.datetime.to_time.strftime("%H:%M") %></td>
+        <td><%= link_to 'Visualizar', admin_session_path(session) %></td>
+        <td><%= link_to 'Editar', edit_admin_session_path(session) %></td>
+        <td><%= link_to 'Remover', admin_session_path(session), method: :delete, data: { confirm: "Você está prestes a remover definitivamente esta sessão.\nVocê tem certeza e deseja prosseguir com esta operação?" } %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Incluir novo', @new_element_path %>

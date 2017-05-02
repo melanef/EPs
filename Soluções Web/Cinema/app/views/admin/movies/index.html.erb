@@ -1,0 +1,22 @@
+<h1>Filmes</h1>
+
+<% if @movies.any? %>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Estreia</th>
+        <th colspan="3">&nbsp;</th>
+    </tr>
+    <% @movies.each do |movie| %>
+    <tr>
+        <td><%= movie.name %></td>
+        <td><%= movie.debut.to_date.strftime("%d/%m/%Y") %></td>
+        <td><%= link_to 'Visualizar', admin_movie_path(movie) %></td>
+        <td><%= link_to 'Editar', edit_admin_movie_path(movie) %></td>
+        <td><%= link_to 'Remover', admin_movie_path(movie), method: :delete, data: { confirm: "Você está prestes a remover definitivamente este filme.\nVocê tem certeza e deseja prosseguir com esta operação?" } %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Incluir novo', new_admin_movie_path %>

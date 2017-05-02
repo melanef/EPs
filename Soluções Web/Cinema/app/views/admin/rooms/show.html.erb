@@ -1,0 +1,23 @@
+<h1>Exibindo Sala <%= @room.name %> do Cinema <%= @theater.name %></h1>
+
+<% if @room.sessions.any? %>
+<table>
+    <tr>
+        <th>Filme</th>
+        <th>Data</th>
+        <th>Hora</th>
+    </tr>
+    <%
+        @room.sessions.each do |session|
+            movie = Movie.find(session.movie)
+    %>
+    <tr>
+        <td><%= movie.name %></td>
+        <td><%= session.datetime.to_date.strftime("%d/%m/%Y") %></td>
+        <td><%= session.datetime.to_time.strftime("%H:%M") %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Voltar', admin_theater_rooms_path(@theater) %> | <%= link_to 'Editar', edit_admin_theater_room_path(@theater, @room) %>

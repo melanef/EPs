@@ -1,0 +1,38 @@
+<h3>Cinema: <%= @theater.name %></h3>
+
+<p>
+    <strong>Endereço:</strong>
+    <%= @theater.address %>, <%= @theater.address_number %>
+</p>
+
+<p>
+    <strong>Cidade:</strong>
+    <%= @theater.city %>
+</p>
+
+<p>
+    <strong>Estado:</strong>
+    <%= @theater.state %>
+</p>
+
+<% if @theater_sessions.any? %>
+<h2>Escolha sua Sessão</h2>
+<table>
+    <tr>
+        <th>Filme</th>
+        <th>Sala</th>
+        <th>Data e Hora</th>
+        <th>&nbsp;</th>
+    </tr>
+    <% @theater_sessions.each do |session| %>
+    <tr>
+        <td><%= session.movie.name %></td>
+        <td><%= session.room.name %></td>
+        <td><%= session.datetime.strftime('%H:%M - %d/%m/%Y') %></td>
+        <td><%= link_to 'Comprar ingressos', "/movie/sessions/" + session.id.to_s + "/choose_seat" , class: "button" %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
+
+<%= link_to 'Voltar', theaters_path , class: "single button" %>

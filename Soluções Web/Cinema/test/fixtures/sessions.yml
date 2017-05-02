@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  room_id: 
+  movie_id: 
+  datetime: 2014-12-27 15:18:48
+
+two:
+  room_id: 
+  movie_id: 
+  datetime: 2014-12-27 15:18:48

@@ -1,0 +1,30 @@
+<h2>Cadastre-se</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email%>
+  </div>
+
+  <div class="field">
+    <%= f.label :password , "Senha" %>
+    <% if @validatable %>
+    <em>(mínimo de <%= @minimum_password_length %> caracteres)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation , "Confirme sua senha"  %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Enviar", class: "button single" %>
+  </div>
+  <hr class="breaker">
+<% end %>
+
+<%= render "users/shared/links" %>

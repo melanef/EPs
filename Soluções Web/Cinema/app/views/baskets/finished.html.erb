@@ -1,0 +1,23 @@
+<h2>Compra Concluída - Resumo</h2>
+<%
+@basket.tickets.each do |ticket|
+    session = ticket.session
+    room = session.room
+    theater = room.theater
+    movie = session.movie
+%>
+<div class="ticket">
+    <p><strong>Cinema:</strong> <%= theater.name %></p>
+    <p><strong>Sala:</strong> <%= room.name %></p>
+    <p><strong>Filme:</strong> <%= movie.name %></p>
+    <p><strong>Data:</strong> <%= session.datetime.strftime("%d/%m/%Y") %></p>
+    <p><strong>Hora:</strong> <%= session.datetime.strftime("%H:%M") %></p>
+    <p><strong>Fileira:</strong> <%= ticket.row %></p>
+    <p><strong>Assento:</strong> <%= ticket.seat %></p>
+</div>
+
+<%
+end
+%>
+
+<%= link_to 'Voltar', theaters_path , class: "single button" %>

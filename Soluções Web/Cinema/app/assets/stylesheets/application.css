@@ -1,0 +1,99 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+aside { float: right; width: 20%; background: #FFFFFF repeat-x fixed center center; border: thin dashed #808080; border-radius: 5px; }
+aside ul { list-style-type: none; margin: 20px 10px; padding: 0; }
+
+.button { display: block; cursor: pointer; margin: 4px 0; padding: 5px; font: 16px Verdana, Geneva, sans-serif; color:#585858; text-decoration: none; background: #f5f5f5; border:1px ridge #bbb; text-shadow:0px 1px 0px #fff; box-shadow:0px 1px 10px #d1cfd1; -moz-box-shadow:0px 1px 10px #d1cfd1; -webkit-box-shadow:0px 1px 10px #d1cfd1; border-radius:10px; -moz-border-radius:10px; -webkit-border-radius:10px; }
+.button.single { float: left; width: 15%; text-align: center; margin: 20px 20px 0 0; }
+.button.single.span-2 { width: 30%; }
+.button:hover { background: #c6c6c6; }
+
+form { margin: 0 0 20px; }
+hr.breaker { float: none; clear: both; visibility: hidden; }
+
+#new_user { width: 50%; margin: 0 auto 20px; border: thin dashed #ff8080; border-radius: 5px; padding: 5%; background: #efefef; }
+#new_user div { margin: 0 0 5px; }
+#new_user div label { font: bold 14px Verdana, sans-serif; }
+#new_user div input[type=text] , #new_user div input[type=email] , #new_user div input[type=password] { width: 70%; }
+#new_user .button.single { width: 20%; }
+#new_user .button.single.span-2 { width: 40%; }
+
+#new_customer { width: 50%; margin: 0 auto 20px; border: thin dashed #ff8080; border-radius: 5px; padding: 5%; background: #efefef; }
+#new_customer div { margin: 0 0 5px; }
+#new_customer div label { font: bold 14px Verdana, sans-serif; }
+#new_customer div input[type=text] , #new_customer div input[type=email] , #new_customer div input[type=password] { width: 70%; }
+#new_customer .button.single { width: 20%; }
+#new_customer .button.single.span-2 { width: 40%; }
+
+#container { width: 80%; margin: 0 auto;}
+
+h1 { font-family: 'Monoton', cursive; font-size: 50px; color: #B22222; text-align: center; margin: 20px 0; background: #FFFFFF repeat-x fixed center center; border: thin dashed #808080; border-radius: 5px; }
+h1 a { color: color: #B22222; text-decoration: none; }
+h1 a:visited { color: #B22222; }
+h2 { font-family: Helvetica; color: #888888; float: left; margin: 20px 150px 5px 40%; width: 60%; }
+h3 { font-family: Helvetica; color: #585858; }
+
+
+body {
+	background: #F5F5F5 url("http://s3.postimg.org/nkf8wmtcj/neena_veena_2_film_Copia.jpg") repeat-y fixed center center;
+	background-size:100%;
+}
+
+#coluna{
+	float: left;
+	width: 74%;
+ 	min-height: 800px;
+ 	margin-bottom: 150px;
+ 	padding: 2%;
+	background: #FFFFFF no-repeat fixed center center;
+	border: thin dashed #808080;
+	border-radius: 5px;
+}
+
+table {
+	border: 2px solid #F5F5F5;
+	border-collapse: collapse;
+	width: 100%;
+	font-family: Helvetica;
+}
+
+tr {
+	border: 2px solid #F5F5F5;
+	border-collapse: collapse;
+}
+
+th {
+	height: 40px;
+	text-align: center;
+	border: 2px solid #F5F5F5;
+	border-collapse: collapse;
+	background-color: #F5F5F5;
+	color: #B22222;
+}
+
+td {
+	height: 40px;
+	text-align: center;
+	border: 2px solid #F5F5F5;
+	border-collapse: collapse;
+	color: #585858;
+}
+
+p {
+	font-family: Helvetica;
+	color: #585858;
+}

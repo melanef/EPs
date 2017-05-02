@@ -1,0 +1,32 @@
+<%= form_for [:admin, @movie] do |f| %>
+
+    <% if @movie.errors.any? %>
+    <div id="error_explanation">
+        <h2>
+            <%= pluralize(@movie.errors.count, "erro") %> impediram este filme de ser incluído:
+        </h2>
+        <ul>
+            <% @movie.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+            <% end %>
+        </ul>
+    </div>
+    <% end %>
+
+    <p>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </p>
+
+    <p>
+        <%= f.label :summary %>
+        <%= f.text_area :summary %>
+    </p>
+
+    <p>
+        <%= f.label :debut %>
+        <%= f.date_field :debut %>
+    </p>
+
+    <p><%= f.submit %></p>
+<% end %>

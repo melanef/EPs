@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cine7 Cinemas</title>
+  <link href='https://fonts.googleapis.com/css?family=Monoton' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div id="container">
+
+<h1><%= link_to 'Cine7 Cinemas', '/' %></h1>
+
+<aside>
+
+<ul>
+<li><%= link_to 'Cinemas', '/theaters' , class: "button" %></li>
+<li><%= link_to 'Admin', 'admin' , class: "button" %></li>
+<li><%= link_to 'Logout', destroy_customer_session_path, method: :delete, class: "button" %></li>
+</ul>
+
+</aside>
+
+<div id="coluna">
+
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+<%= yield %>
+
+</div>
+
+</div>
+
+</body>
+</html>

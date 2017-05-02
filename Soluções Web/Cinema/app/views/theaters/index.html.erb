@@ -1,0 +1,22 @@
+<h2>Cinemas</h2>
+
+<% if @theaters.any? %>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th colspan="3">&nbsp;</th>
+    </tr>
+    <% @theaters.each do |theater| %>
+    <tr>
+        <td><%= theater.name %></td>
+        <td><%= theater.address %>, <%= theater.address_number %></td>
+        <td><%= theater.city %></td>
+        <td><%= theater.state %></td>
+        <td><%= link_to 'Visualizar', theater_path(theater), class: "button" %></td>
+    </tr>
+    <% end %>
+</table>
+<% end %>
