@@ -210,11 +210,46 @@ TipoLista *criaLista()
 
 TipoNo *ultimoNo(TipoLista *fila)
 {
-    if (filaVazia(fila)) {
+    if (listaVazia(fila)) {
         return NULL;
     }
 
     return fila->fim;
+}
+
+void insereOrdenado(int v, TipoLista *lista)
+{
+    TipoNo *novoNo = (TipoNo *) malloc(sizeof(TipoNo));
+    novoNo->v = v;
+    novoNo->prox = NULL;
+
+    if (listaVazia(lista)) {
+        lista->inicio = novoNo;
+        lista->fim = novoNo;
+    } else{
+        bool inserido = false;
+        TipoNo *atual = lista->inicio;
+
+        if (atual->v > v) {
+            lista->inicio = novoNo;
+            novoNo->prox = atual;
+        } else {
+            while (atual->prox != NULL) {
+                if (atual->prox->v > v) {
+                    novoNo->prox = atual->prox;
+                    atual->prox = novoNo;
+                    inserido = true;
+                    break;
+                }
+
+                atual = atual->prox;
+            }
+
+            if (!inserido) {
+                atual->prox = novoNo;
+            }
+        }
+    }
 }
 
 void insereFila(int v, TipoLista *fila)
@@ -223,7 +258,7 @@ void insereFila(int v, TipoLista *fila)
     novoNo->v = v;
     novoNo->prox = NULL;
 
-    if (filaVazia(fila)) {
+    if (listaVazia(fila)) {
         fila->inicio = novoNo;
         fila->fim = novoNo;
     } else {
@@ -247,18 +282,18 @@ int removeFila(TipoLista *fila)
     return valor;
 }
 
-bool filaVazia(TipoLista *fila)
+bool listaVazia(TipoLista *lista)
 {
-    if (fila->inicio == NULL) {
+    if (lista->inicio == NULL) {
         return true;
     }
 
     return false;
 }
 
-void imprimeFila(TipoLista *fila)
+void imprimeLista(TipoLista *lista)
 {
-    TipoNo *atual = fila->inicio;
+    TipoNo *atual = lista->inicio;
     while (atual != NULL) {
         printf("%d ", atual->v);
         atual = atual->prox;
@@ -271,31 +306,13 @@ void inserePilha(int v, TipoLista *pilha)
     novoNo->v = v;
     novoNo->prox = NULL;
 
-    if (pilhaVazia(pilha)) {
+    if (listaVazia(pilha)) {
         pilha->inicio = novoNo;
         pilha->fim = novoNo;
     } else {
         TipoNo *topo = pilha->inicio;
         novoNo->prox = topo;
         pilha->inicio = novoNo;
-    }
-}
-
-bool pilhaVazia(TipoLista *pilha)
-{
-    if (pilha->inicio == NULL) {
-        return true;
-    }
-
-    return false;
-}
-
-void imprimePilha(TipoLista *pilha)
-{
-    TipoNo *atual = pilha->inicio;
-    while (atual != NULL) {
-        printf("%d ", atual->v);
-        atual = atual->prox;
     }
 }
 
@@ -323,7 +340,7 @@ void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *
     distancias[v - 1] = 0;
     TipoLista *fila = criaLista();
     insereFila(v, fila);
-    while (!filaVazia(fila)) {
+    while (!listaVazia(fila)) {
         int w = removeFila(fila);
         if (!listaAdjVazia(w, grafo)) {
             TipoApontador aresta = primeiroListaAdj(w, grafo);
@@ -354,7 +371,7 @@ void imprimeBFS(TipoGrafo *grafo)
     BFS(antecessores, distancias, grafo, descobertas);
 
     printf("BFS:\n");
-    imprimeFila(descobertas);
+    imprimeLista(descobertas);
     printf("\n\n");
 
     printf("BFS Paths:\n");
@@ -368,7 +385,7 @@ void imprimeBFS(TipoGrafo *grafo)
             inserePilha(atual, caminho);
         }
 
-        imprimePilha(caminho);
+        imprimeLista(caminho);
         */
         imprimeCaminho(atual, antecessores);
 
@@ -437,7 +454,7 @@ void imprimeDFS(TipoGrafo *grafo)
     DFS(antecessores, grafo, descobertas);
 
     printf("DFS:\n");
-    imprimeFila(descobertas);
+    imprimeLista(descobertas);
     printf("\n\n");
 
     printf("DFS Paths:\n");
@@ -451,7 +468,7 @@ void imprimeDFS(TipoGrafo *grafo)
             inserePilha(atual, caminho);
         }
 
-        imprimePilha(caminho);
+        imprimeLista(caminho);
         */
         imprimeCaminho(atual, antecessores);
 
@@ -481,10 +498,10 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
 
     printf("Connected Components:\n");
     int i = 0;
-    while (!filaVazia(conjuntos)) {
+    while (!listaVazia(conjuntos)) {
         TipoLista *endereco = (TipoLista *) (uintptr_t) removeFila(conjuntos);
         printf("C%d: ", ++i);
-        while (!filaVazia(endereco)) {
+        while (!listaVazia(endereco)) {
             printf("%d ", removeFila(endereco));
         }
 
@@ -495,7 +512,7 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
 void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila) {
     if (cores[v - 1] == COR_BRANCO) {
         cores[v - 1] = COR_CINZA;
-        insereFila(v, fila);
+        insereOrdenado(v, fila);
 
         if (!listaAdjVazia(v, grafo)) {
             TipoApontador aresta = primeiroListaAdj(v, grafo);

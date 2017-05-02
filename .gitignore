@@ -1,1 +1,4 @@
+# Excluir arquivos de saída
 *.o
+*.exe
+
