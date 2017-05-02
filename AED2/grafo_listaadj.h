@@ -50,12 +50,7 @@ typedef struct tno {
 typedef struct {
   TipoNo *inicio;
   TipoNo *fim;
-} TipoFila;
-
-typedef struct {
-  TipoNo *topo;
-  TipoNo *fundo;
-} TipoPilha;
+} TipoLista;
 
 /********************
 
@@ -180,71 +175,66 @@ void recuperaAdj(int v, TipoApontador p, int *u, TipoPeso *peso,
 TipoApontador existeERetornaAresta(int v1, int v2, TipoGrafo *grafo);
 
 /*
-  TipoFila criaFila(): cria uma fila vazia para inteiros
+  TipoLista criaLista(): cria uma lista ligada vazia para inteiros
 */
-TipoFila *criaFila();
+TipoLista *criaLista();
 
 /*
-  insereFila(int v, TipoFila *fila): insere um elemento na fila.
+  insereFila(int v, TipoLista *fila): insere um elemento na fila.
 */
-void insereFila(int v, TipoFila *fila);
+void insereFila(int v, TipoLista *fila);
 
 /*
-  int removeFila(TipoFila *fila): remove um elemento da fila.
+  int removeFila(TipoLista *fila): remove um elemento da fila.
 */
-int removeFila(TipoFila *fila);
+int removeFila(TipoLista *fila);
 
 /*
-  bool filaVazia(TipoFila *fila): verifica se a fila está vazia
+  bool filaVazia(TipoLista *fila): verifica se a fila está vazia
 */
-bool filaVazia(TipoFila *fila);
+bool filaVazia(TipoLista *fila);
 
 /*
-  TipoNo *ultimoNo(TipoFila *fila): percorre a fila até o último nó
+  TipoNo *ultimoNo(TipoLista *fila): percorre a fila até o último nó
 */
-TipoNo *ultimoNo(TipoFila *fila);
+TipoNo *ultimoNo(TipoLista *fila);
 
 /*
-  void imprimeFila(TipoFila *fila): imprime os elementos da fila
+  void imprimeFila(TipoLista *fila): imprime os elementos da fila
 */
-void imprimeFila(TipoFila *fila);
+void imprimeFila(TipoLista *fila);
 
 /*
-  TipoPilha criaPilha(): cria uma pilha vazia para inteiros
+  inserePilha(int v, TipoLista *pilha): insere um elemento na pilha.
 */
-TipoPilha *criaPilha();
+void inserePilha(int v, TipoLista *pilha);
 
 /*
-  inserePilha(int v, TipoPilha *pilha): insere um elemento na pilha.
+  bool pilhaVazia(TipoLista *pilha): verifica se a pilha está vazia
 */
-void inserePilha(int v, TipoPilha *pilha);
+bool pilhaVazia(TipoLista *pilha);
 
 /*
-  bool pilhaVazia(TipoPilha *pilha): verifica se a pilha está vazia
+  TipoNo *ultimoNo(TipoLista *pilha): percorre a pilha até o último nó
 */
-bool pilhaVazia(TipoPilha *pilha);
+TipoNo *topo(TipoLista *pilha);
 
 /*
-  TipoNo *ultimoNo(TipoPilha *pilha): percorre a pilha até o último nó
+  void imprimePilha(TipoLista *pilha): imprime os elementos da pilha
 */
-TipoNo *topo(TipoPilha *pilha);
+void imprimePilha(TipoLista *pilha);
 
 /*
-  void imprimePilha(TipoPilha *pilha): imprime os elementos da pilha
-*/
-void imprimePilha(TipoPilha *pilha);
-
-/*
-  BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoFila *descobertas):
+  BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas):
   Executa a busca em largura no grafo
 */
-void BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoFila *descobertas);
+void BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas);
 
 /*
-  visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoFila *descobertas):
+  visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoLista *descobertas):
   visita cada elemento do grafo e dispara a busca por novos elementos, atribuindo as novas cores e distâncias
 */
-void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoFila *descobertas);
+void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoLista *descobertas);
 
 /*
   imprimeBFS(TipoGrafo *grafo): imprime os dados de descobertas e caminhos do grafo
@@ -257,16 +247,16 @@ void imprimeBFS(TipoGrafo *grafo);
 void imprimeCaminho(int v, int *antecessores);
 
 /*
-  DFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoFila *descobertas):
+  DFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas):
   Executa a busca em profundidade no grafo
 */
-void DFS(int *antecessores, TipoGrafo *grafo, TipoFila *descobertas);
+void DFS(int *antecessores, TipoGrafo *grafo, TipoLista *descobertas);
 
 /*
-  visitaDFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoFila *descobertas):
+  visitaDFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoLista *descobertas):
   visita cada elemento do grafo e dispara a busca por novos elementos, atribuindo as novas cores e distâncias
 */
-void visitaDFS(int v, TipoGrafo *grafo, int *tempo, TipoCor *cores, int *tdesc, int *tterm, int *antecessores, TipoFila *descobertas);
+void visitaDFS(int v, TipoGrafo *grafo, int *tempo, TipoCor *cores, int *tdesc, int *tterm, int *antecessores, TipoLista *descobertas);
 
 /*
   imprimeDFS(TipoGrafo *grafo): imprime os dados de descobertas e caminhos do grafo
@@ -279,7 +269,7 @@ void imprimeDFS(TipoGrafo *grafo);
 void imprimeConjuntosConectados(TipoGrafo *grafo);
 
 /*
-  visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoFila *fila):
+  visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila):
   percorre o grafo encontrando elementos para os conjuntos conectados
 */
-void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoFila *fila);
+void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila);

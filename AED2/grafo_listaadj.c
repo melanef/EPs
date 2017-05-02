@@ -200,15 +200,15 @@ TipoApontador existeERetornaAresta(int v1, int v2, TipoGrafo *grafo)
     return NULL;
 }
 
-TipoFila *criaFila()
+TipoLista *criaLista()
 {
-    TipoFila *fila = (TipoFila *) malloc(sizeof(TipoFila));
+    TipoLista *fila = (TipoLista *) malloc(sizeof(TipoLista));
     fila->inicio = NULL;
     fila->fim = NULL;
     return fila;
 }
 
-TipoNo *ultimoNo(TipoFila *fila)
+TipoNo *ultimoNo(TipoLista *fila)
 {
     if (filaVazia(fila)) {
         return NULL;
@@ -217,7 +217,7 @@ TipoNo *ultimoNo(TipoFila *fila)
     return fila->fim;
 }
 
-void insereFila(int v, TipoFila *fila)
+void insereFila(int v, TipoLista *fila)
 {
     TipoNo *novoNo = (TipoNo *) malloc(sizeof(TipoNo));
     novoNo->v = v;
@@ -233,7 +233,7 @@ void insereFila(int v, TipoFila *fila)
     }
 }
 
-int removeFila(TipoFila *fila)
+int removeFila(TipoLista *fila)
 {
     TipoNo *atual = fila->inicio;
     fila->inicio = atual->prox;
@@ -247,7 +247,7 @@ int removeFila(TipoFila *fila)
     return valor;
 }
 
-bool filaVazia(TipoFila *fila)
+bool filaVazia(TipoLista *fila)
 {
     if (fila->inicio == NULL) {
         return true;
@@ -256,8 +256,7 @@ bool filaVazia(TipoFila *fila)
     return false;
 }
 
-
-void imprimeFila(TipoFila *fila)
+void imprimeFila(TipoLista *fila)
 {
     TipoNo *atual = fila->inicio;
     while (atual != NULL) {
@@ -266,48 +265,41 @@ void imprimeFila(TipoFila *fila)
     }
 }
 
-TipoPilha *criaPilha()
-{
-    TipoPilha *pilha = (TipoPilha *) malloc(sizeof(TipoPilha));
-    pilha->topo = NULL;
-    pilha->fundo = NULL;
-    return pilha;
-}
-
-void inserePilha(int v, TipoPilha *pilha)
+void inserePilha(int v, TipoLista *pilha)
 {
     TipoNo *novoNo = (TipoNo *) malloc(sizeof(TipoNo));
     novoNo->v = v;
     novoNo->prox = NULL;
 
     if (pilhaVazia(pilha)) {
-        pilha->topo = novoNo;
+        pilha->inicio = novoNo;
+        pilha->fim = novoNo;
     } else {
-        TipoNo *topo = pilha->topo;
+        TipoNo *topo = pilha->inicio;
         novoNo->prox = topo;
-        pilha->topo = novoNo;
+        pilha->inicio = novoNo;
     }
 }
 
-bool pilhaVazia(TipoPilha *pilha)
+bool pilhaVazia(TipoLista *pilha)
 {
-    if (pilha->topo == NULL) {
+    if (pilha->inicio == NULL) {
         return true;
     }
 
     return false;
 }
 
-void imprimePilha(TipoPilha *pilha)
+void imprimePilha(TipoLista *pilha)
 {
-    TipoNo *atual = pilha->topo;
+    TipoNo *atual = pilha->inicio;
     while (atual != NULL) {
         printf("%d ", atual->v);
         atual = atual->prox;
     }
 }
 
-void BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoFila *descobertas)
+void BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas)
 {
     TipoCor cores[grafo->numVertices];
     for (int i = 0; i < grafo->numVertices; i++) {
@@ -323,13 +315,13 @@ void BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoFila *descobe
     }
 }
 
-void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoFila *descobertas)
+void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *distancias, TipoLista *descobertas)
 {
     cores[v - 1] = COR_CINZA;
     insereFila(v, descobertas);
 
     distancias[v - 1] = 0;
-    TipoFila *fila = criaFila();
+    TipoLista *fila = criaLista();
     insereFila(v, fila);
     while (!filaVazia(fila)) {
         int w = removeFila(fila);
@@ -357,7 +349,7 @@ void imprimeBFS(TipoGrafo *grafo)
 {
     int antecessores[grafo->numVertices];
     int distancias[grafo->numVertices];
-    TipoFila *descobertas = criaFila();
+    TipoLista *descobertas = criaLista();
 
     BFS(antecessores, distancias, grafo, descobertas);
 
@@ -369,7 +361,7 @@ void imprimeBFS(TipoGrafo *grafo)
     for (int i = 0; i < grafo->numVertices; i++) {
         int atual = i + 1;
         /*
-        TipoPilha *caminho = criaPilha();
+        TipoLista *caminho = criaLista();
         inserePilha(atual, caminho);
         while (antecessores[atual - 1] != -1) {
             atual = antecessores[atual - 1];
@@ -395,7 +387,7 @@ void imprimeCaminho(int v, int *antecessores)
     printf("%d ", v);
 }
 
-void DFS(int *antecessores, TipoGrafo *grafo, TipoFila *descobertas)
+void DFS(int *antecessores, TipoGrafo *grafo, TipoLista *descobertas)
 {
     int tdesc[grafo->numVertices], tterm[grafo->numVertices];
     int tempo = 0;
@@ -414,7 +406,7 @@ void DFS(int *antecessores, TipoGrafo *grafo, TipoFila *descobertas)
     }
 }
 
-void visitaDFS(int v, TipoGrafo *grafo, int *tempo, TipoCor *cores, int *tdesc, int *tterm, int *antecessores, TipoFila *descobertas)
+void visitaDFS(int v, TipoGrafo *grafo, int *tempo, TipoCor *cores, int *tdesc, int *tterm, int *antecessores, TipoLista *descobertas)
 {
     *tempo = *tempo + 1;
     cores[v - 1] = COR_CINZA;
@@ -440,7 +432,7 @@ void visitaDFS(int v, TipoGrafo *grafo, int *tempo, TipoCor *cores, int *tdesc, 
 void imprimeDFS(TipoGrafo *grafo)
 {
     int antecessores[grafo->numVertices];
-    TipoFila *descobertas = criaFila();
+    TipoLista *descobertas = criaLista();
 
     DFS(antecessores, grafo, descobertas);
 
@@ -452,7 +444,7 @@ void imprimeDFS(TipoGrafo *grafo)
     for (int i = 0; i < grafo->numVertices; i++) {
         int atual = i + 1;
         /*
-        TipoPilha *caminho = criaPilha();
+        TipoLista *caminho = criaLista();
         inserePilha(atual, caminho);
         while (antecessores[atual - 1] != -1) {
             atual = antecessores[atual - 1];
@@ -476,12 +468,12 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
         cores[i] = COR_BRANCO;
     }
 
-    TipoFila *conjuntos = criaFila();
+    TipoLista *conjuntos = criaLista();
 
     for (int i = 0; i < grafo->numVertices; i++) {
         int atual = i + 1;
         if (cores[atual - 1] == COR_BRANCO) {
-            TipoFila *fila = criaFila();
+            TipoLista *fila = criaLista();
             visitaConjuntosConectados(atual, grafo, cores, fila);
             insereFila((uintptr_t) fila, conjuntos);
         }
@@ -490,7 +482,7 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
     printf("Connected Components:\n");
     int i = 0;
     while (!filaVazia(conjuntos)) {
-        TipoFila *endereco = (TipoFila *) (uintptr_t) removeFila(conjuntos);
+        TipoLista *endereco = (TipoLista *) (uintptr_t) removeFila(conjuntos);
         printf("C%d: ", ++i);
         while (!filaVazia(endereco)) {
             printf("%d ", removeFila(endereco));
@@ -500,7 +492,7 @@ void imprimeConjuntosConectados(TipoGrafo *grafo)
     }
 }
 
-void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoFila *fila) {
+void visitaConjuntosConectados(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila) {
     if (cores[v - 1] == COR_BRANCO) {
         cores[v - 1] = COR_CINZA;
         insereFila(v, fila);
