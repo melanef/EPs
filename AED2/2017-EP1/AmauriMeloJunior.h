@@ -52,6 +52,8 @@ typedef struct {
   TipoNo *fim;
 } TipoLista;
 
+int main(int argc, char *argv[]);
+
 /********************
 
   Prototipos dos metodos sobre grafos
@@ -174,6 +176,12 @@ void recuperaAdj(int v, TipoApontador p, int *u, TipoPeso *peso,
 */
 TipoApontador existeERetornaAresta(int v1, int v2, TipoGrafo *grafo);
 
+/********************
+
+  Prototipos dos metodos sobre listas ligadas (pilhas, filas ou listas ordenadas)
+
+*********************/
+
 /*
   TipoLista criaLista(): cria uma lista ligada vazia para inteiros
 */
@@ -219,6 +227,12 @@ void imprimeLista(TipoLista *lista);
   inserePilha(int v, TipoLista *pilha): insere um elemento no topo da pilha.
 */
 void inserePilha(int v, TipoLista *pilha);
+
+/********************
+
+  Prototipos dos metodos de algoritmos de busca e análise de grafos
+
+*********************/
 
 /*
   BFS(int *antecessores, int *distancias, TipoGrafo *grafo, TipoLista *descobertas):
