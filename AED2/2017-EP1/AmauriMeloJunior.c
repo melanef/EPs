@@ -181,7 +181,7 @@ void imprimeGrafo(TipoGrafo *grafo)
     printf("\n");
 }
 
-void liberaGrafo (TipoGrafo *grafo)
+void liberaGrafo(TipoGrafo *grafo)
 {
     TipoApontador aresta, proxAresta;
     int i;
@@ -408,7 +408,7 @@ void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *
             }
         }
 
-        cores[w] = COR_PRETO;
+        cores[w - 1] = COR_PRETO;
     }
 }
 

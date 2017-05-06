@@ -385,7 +385,7 @@ void visitaBFS(int v, TipoGrafo *grafo, TipoCor *cores, int *antecessores, int *
             }
         }
 
-        cores[w] = COR_PRETO;
+        cores[w - 1] = COR_PRETO;
     }
 }
 
