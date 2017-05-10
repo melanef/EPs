@@ -301,8 +301,13 @@ TipoLista *verticesDeArticulacao(TipoGrafo *grafo, TipoLista *conjuntos);
 TipoLista *conjuntosConectadosSemVertice(TipoGrafo *grafo, int excluido);
 
 /*
-  void visitaConjuntosConectadosSemVertice(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila, int excluido):
+  visitaConjuntosConectadosSemVertice(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila, int excluido):
   percorre o grafo encontrando elementos para os conjuntos conectados evitando arestas que apontem para um vértice dado
   como parâmetro
 */
 void visitaConjuntosConectadosSemVertice(int v, TipoGrafo *grafo, TipoCor *cores, TipoLista *fila, int excluido);
+
+/*
+  imprimeVerticesDeArticulacao(TipoLista *vertices): imprime lista de vértices de articulação
+*/
+void imprimeVerticesDeArticulacao(TipoLista *vertices);
