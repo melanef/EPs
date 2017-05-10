@@ -7,6 +7,8 @@
 
 *************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>   /* variaveis bool assumem valores "true" ou "false" */
 #include <stdint.h>    /* cast para converter ponteiros para int e vice-versa */
 
