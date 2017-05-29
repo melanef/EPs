@@ -10,12 +10,12 @@ int leGrafo(char* nomearq, TipoGrafo *grafo)
         return 0;
     }
 
-    fscanf(arquivo, "%d %d", &(grafo->numVertices), &(grafo->numArestas));
+    fscanf(arquivo, "%d %d\n", &(grafo->numVertices), &(grafo->numArestas));
 
     inicializaGrafo(grafo, grafo->numVertices);
 
     for (i = 0; i < grafo->numArestas; i++) {
-        fscanf(arquivo, "%d %d %d", &verticeOrigem, &verticeDestino, &peso);
+        fscanf(arquivo, "%d %d %d\n", &verticeOrigem, &verticeDestino, &peso);
         if (!existeAresta(verticeOrigem, verticeDestino, grafo)) {
             insereAresta(verticeOrigem, verticeDestino, peso, grafo);
         }
