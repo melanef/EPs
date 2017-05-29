@@ -7,22 +7,31 @@
 #define EOS '\0'
 
 typedef struct String {
-    char * char_string;
+    char * chars;
     int length;
 } String;
 
-String * construct(char * char_string, int size);
+String * newString(int size);
 
-String * explode(String delimiters, String string);
-
-String * implode(String separator, String string1, String string2);
-
-char charAt(String string, int position);
+String * constructString(char * charArray, int size);
 
 char * asCharArray(String string);
 
-int length(char * char_string);
+char * copyCharArray(char * source, int size);
 
-String * substring(String string, int begin, int end);
+String * explode(CharList separators, String string);
+
+String * implode(String separator, String * strings);
+
+String * concatStrings(String string1, String string2);
+
+char charAt(String string, int position);
+
+int length(char * charArray);
+
+String * substringFromString(String source, int begin, int end);
+
+String * substringFromCharArray(char * source, int begin, int end);
+
 
 #endif
