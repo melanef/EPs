@@ -1,15 +1,20 @@
-# Lists.h
+/* Lists.h */
 #include <stdio.h>
 
-typedef struct CharList {
-    CharNode head;
-    CharNode tail;
+#ifndef NEF_LISTS
+#define NEF_LISTS 1
+
+typedef struct charnode {
+    char value;
+    struct charnode * prox;
+} CharNode;
+
+typedef struct charlist {
+    CharNode * head;
+    CharNode * tail;
     int quantity;
 } CharList;
 
-typedef struct CharNode {
-    char valor;
-    CharNode prox;
-} CharNode;
 
 
+#endif

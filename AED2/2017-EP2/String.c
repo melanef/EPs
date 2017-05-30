@@ -1,8 +1,5 @@
-# String.c
-#include <stdbool.h>
-#include <stdio.h>
+/* String.c */
 #include "String.h"
-#include "Lists.h"
 
 String * newString(int size)
 {
@@ -37,9 +34,9 @@ String * constructString(char * charArray, int size)
     return string;
 }
 
-char * asCharArray(String string)
+char * asCharArray(String * source)
 {
-    char * char_array = copyCharArray(string->chars, string->length);
+    char * char_array = copyCharArray(source->chars, source->length);
 
     return char_array;
 }
@@ -59,12 +56,12 @@ char * copyCharArray(char * source, int size)
     return result;
 }
 
-String * explode(CharList separators, String string)
+String ** explode(CharList * separators, String * string)
 {
     bool isSeparator;
     int begin = 0, quantity = 0, i, j;
-    CharNode separator;
-    String * strings;
+    CharNode * separator;
+    String ** strings;
 
     // Fase de contagem
     for (i = 0; i < string->length; i++) {
@@ -73,7 +70,7 @@ String * explode(CharList separators, String string)
         isSeparator = false;
         separator = separators->head;
         while (separator != NULL) {
-            if (c == separator->v) {
+            if (c == separator->value) {
                 isSeparator = true;
                 break;
             }
@@ -90,7 +87,7 @@ String * explode(CharList separators, String string)
     }
 
     // Fase de alocação
-    strings = (String *) malloc(quantity * sizeof(String *));
+    strings = (String **) malloc(quantity * sizeof(String *));
 
     // Fase de criação
     for (i = 0, j = 0; i < string->length; i++) {
@@ -99,7 +96,7 @@ String * explode(CharList separators, String string)
         isSeparator = false;
         separator = separators->head;
         while (separator != NULL) {
-            if (c == separator->v) {
+            if (c == separator->value) {
                 isSeparator = true;
                 break;
             }
@@ -118,10 +115,10 @@ String * explode(CharList separators, String string)
     return strings;
 }
 
-String * implode(String separator, String * strings)
+void implode(String * separator, String ** strings)
 {}
 
-String * concatStrings(String string1, String string2)
+String * concatStrings(String * string1, String * string2)
 {
     int i, j;
     String * string = newString(string1->length + string2->length);
@@ -137,7 +134,7 @@ String * concatStrings(String string1, String string2)
     return string;
 }
 
-char charAt(String string, int position)
+char charAt(String * string, int position)
 {
     if (!(string->length > position)) {
         return EOS;
@@ -153,9 +150,9 @@ int length(char * charArray)
     return c;
 }
 
-String * substringFromString(String source, int begin, int end)
+String * substringFromString(String * source, int begin, int end)
 {
-    int i;
+    int i, j;
     int size = (end - begin) + 1;
 
     if (!(size > 0)) {
@@ -168,7 +165,7 @@ String * substringFromString(String source, int begin, int end)
 
     String * string = newString(size);
 
-    for (i = 0; j = begin; j < end; i++, j++) {
+    for (i = 0, j = begin; j < end; i++, j++) {
         string->chars[i] = source->chars[j];
     }
 
@@ -177,22 +174,27 @@ String * substringFromString(String source, int begin, int end)
 
 String * substringFromCharArray(char * source, int begin, int end)
 {
-    int i;
+    int i, j;
     int size = (end - begin) + 1;
 
     if (!(size > 0)) {
         return NULL;
     }
 
-    if (!(end < source->length)) {
+    if (!(end < length(source))) {
         return NULL;
     }
 
     String * string = newString(size);
 
-    for (i = 0; j = begin; j < end; i++, j++) {
+    for (i = 0, j = begin; j < end; i++, j++) {
         string->chars[i] = source[j];
     }
 
     return string;
+}
+
+void printString(String * string)
+{
+    printf("%s\n", string->chars);
 }
