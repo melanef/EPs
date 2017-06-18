@@ -1,17 +1,29 @@
 /* Trie.h */
 
 #include <stdint.h>         /* cast para converter ponteiros para int e vice-versa */
-#include "./ListaLigada.h"
+#include "./List.h"
 #include "./String.h"
-#include "./Trie.c"
 
-typedef struct TrieTree {
-    ListaLigada sub;
-    ListaLigada posicoes;
-} TrieTree;
+typedef struct trie {
+    List sub;
+} Trie;
 
-TrieTree *criaTrie();
+typedef struct trieNode {
+    char c;
+    List sub;
+    List positions;
+} TrieNode;
 
-void populaTrie(TrieTree trie, String string);
 
-ListaLigada busca(TrieTree trie, String string);
+Trie * trieNew();
+
+TrieNode * trieNodeNew(char c);
+
+void trieInsert(Trie * trie, String * word, int position);
+
+TrieNode * trieFindNode(List * sub, char x);
+
+TrieNode * trieFindOrCreateNode(List * sub, char x);
+
+List * trieSearch(Trie * trie, String * word);
+
