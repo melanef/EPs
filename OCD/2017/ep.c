@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 int mdc(int x, int y)
@@ -29,6 +30,21 @@ void printMdc(int x, int y)
 
 int main(const int argc, const char argv[])
 {
+    int n, i, current_mdc = 0;
+    int * numbers;
     printMdc(25, 105);
     printMdc(120, 36);
+
+    printf("Entre com a quantidade de números:\n");
+    scanf("%u", &n);
+
+    numbers = (int *) malloc(n * sizeof(int));
+
+    printf("Digite os números, um de cada vez:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%u", &numbers[i]);
+        current_mdc = mdc(numbers[i], current_mdc);
+    }
+
+    printf("O MDC é %d\n", current_mdc);
 }
