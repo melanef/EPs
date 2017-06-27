@@ -1,11 +1,41 @@
+.data
+quantity_message: .asciiz "Entre com a quantidade de numeros:\n"
+number_message:   .asciiz "Digite os numeros, um de cada vez:\n"
+result_message:	  .asciiz "O resultado do MDC dos numeros informados é: "
+
 .text
 
 main:
-	li	$a0, 25
-	li	$a1, 105
+	li 	$v0, 4
+	la	$a0, quantity_message
+	syscall
+	li	$v0, 5
+	syscall
+	la	$s0, ($v0)
+	li	$s1, 0
+	
+	li 	$v0, 4
+	la	$a0, number_message
+	syscall
+main_loop:
+	beqz 	$s0, main_end
+
+	li	$v0, 5
+	syscall
+	
+	la	$a0, ($s1)
+	la	$a1, ($v0)
 	jal	mdc
-	la	$a0,  ($v0)
+	la	$s1, ($v0)
+	addi	$s0, $s0, -1
+	j	main_loop
+	
+main_end:
+	li	$v0, 4
+	la	$a0, result_message
+	syscall
 	li	$v0, 1
+	la	$a0, ($s1)
 	syscall
 	li	$v0, 10
 	syscall
