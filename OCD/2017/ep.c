@@ -32,8 +32,6 @@ int main(const int argc, const char argv[])
 {
     int n, i, current_mdc = 0;
     int * numbers;
-    printMdc(25, 105);
-    printMdc(120, 36);
 
     printf("Entre com a quantidade de números:\n");
     scanf("%u", &n);
