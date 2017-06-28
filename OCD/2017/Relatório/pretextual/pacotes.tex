@@ -1,0 +1,86 @@
+% ---
+% Pacotes básicos 
+% ---
+% Usa a fonte Latin Modern
+\usepackage{lmodern}
+
+\usepackage{cmap}
+
+% Seleção de códigos de fonte.
+\usepackage[T1]{fontenc}
+
+% Codificação do documento (conversão automática dos acentos)
+\usepackage[utf8]{inputenc}
+
+% Usado pela Ficha catalográfica
+\usepackage{lastpage}		
+
+% Indenta o primeiro parágrafo de cada seção.
+\usepackage{indentfirst}
+
+% Controle das cores
+\usepackage{color}
+\usepackage{xcolor}
+% Inclusão de gráficos
+\usepackage{graphicx}			
+
+% para melhorias de justificação
+\usepackage{microtype}
+
+% para incluir pdf
+\usepackage{pdfpages}
+
+% para ilustrações do tipo algoritmo
+\usepackage{algorithm}
+
+% para itens com espaço padrão da abnt
+\usepackage{mdwlist}
+
+% para ilustrações do tipo algoritmo
+\usepackage[noend]{algpseudocode}		
+
+% ---
+% Pacotes de citações
+% ---
+% Paginas com as citações na bibl
+\usepackage[brazilian, hyperpageref]{backref}
+
+% Citações padrão ABNT
+\usepackage[alf]{abntex2cite}
+
+% algoritmos
+\usepackage{minted}
+\usemintedstyle{emacs}
+
+% booktabs
+\usepackage{booktabs}
+\usepackage{tabu}
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+% \renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+
+% % Texto padrão antes do número das páginas
+% \renewcommand{\backref}{}
+
+% % Define os textos da citação
+% \renewcommand*{\backrefalt}[4]{
+% 	\ifcase #1 %
+% 		Nenhuma citação no texto.%
+% 	\or
+% 		Citado na página #2.%
+% 	\else
+% 		Citado #1 vezes nas páginas #2.%
+% 	\fi}%
+% % ---
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+% para geração de dummy text
+\usepackage{lipsum}				
+% ---

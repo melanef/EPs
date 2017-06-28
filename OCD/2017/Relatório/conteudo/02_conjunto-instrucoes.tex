@@ -1,0 +1,175 @@
+\chapter{O Conjunto de Instruções MIPS}
+
+O Conjunto de Instruções MIPS prevê três formatos de instruções, e as instruções podem receber até três operandos. Na arquitetura MIPS, os operandos das instruções são registradores de 32 bits de memória ou palavras endereçadas na memória principal ou pilha de dados. No total, 32 registradores compõem a arquitetura, porém há usos convencionados para cada conjunto que veremos adiante.
+
+\section{Formatos de Instruções}
+
+Os três formatos de instruções previstos são estes que se seguem:
+
+\begin{itemize}
+\item Tipo $R$:\\
+
+São instruções para as quais todos os operandos se tratam de registradores. Todas as instruções do tipo R possuem o seguinte formato:\\
+
+\begin{table}[h]
+\centering
+\caption{Instruções tipo $R$}
+\label{tab:tipo_r}
+\begin{tabular}{@{}|l|l|l|l|@{}}
+\toprule 
+OP & rd & rs & rt \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Onde $OP$ corresponde ao código mnemônico da instrução. $rs$ e $rt$ são registradores de origem, e $rd$ é o registrador de destino. Podemos tomar como exemplo a operação $add$:\\
+
+\begin{minted}{asm}
+     add $s1, $s2, $s3
+\end{minted}
+\vspace{0.5cm}
+
+\item Tipo $I$:\\
+São instruções que operam sobre um valor “imediato” e um operando. “Valores imediatos” podem ter no máximo 16 bits de comprimento. Números grandes não devem ser manipulados por instruções imediatas. Todas as instruções do tipo $I$ possuem o seguinte formato:\\
+
+\begin{table}[h]
+\centering
+\caption{Instruções tipo $I$}
+\label{tab:tipo_i}
+\begin{tabular}{@{}|l|l|l|l|@{}}
+\toprule 
+OP & rt & rs & IMM
+ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Onde $OP$ corresponde ao código mnemônico da instrução. $rs$ é o registrador de origem e $rt$ o de destino. $IMM$ corresponde ao valor imediato. Podemos tomar como exemplo a operação $addi$:\\
+
+\begin{minted}{asm}
+     addi $s1, $s2, 100
+\end{minted}
+\vspace{0.5cm}
+
+\item Tipo $J$:\\
+São instruções usadas para realizar saltos. Instruções deste tipo possuem o maior espaço para um valor imediato já que endereços são sempre números grandes. Todas as instruções do tipo $J$ possuem o seguinte formato:\\
+
+\begin{table}[h]
+\centering
+\caption{Instruções tipo $J$}
+\label{tab:tipo_j}
+\begin{tabular}{@{}|l|l|@{}}
+\toprule 
+OP & LABEL
+ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Onde $OP$ corresponde ao código mnemônico da instrução e $LABEL$ é o endereço alvo para onde deve ocorrer o salto. Podemos tomar como exemplo a operação $j$:\\
+
+\begin{minted}{asm}
+j FIM
+\end{minted}
+\end{itemize}
+\vspace{0.5cm}
+
+\section{Registradores disponíveis}
+
+Os 32 registradores são implementados como de uso geral, ou seja, podem ser usados à vontade pelo programador. Os registradores são precedidos pelo caractere \$ nas instruções em \textit{assembly}. Podem ser endereçados pelo seu endereço numérico (de $\$0$ a $\$31$) ou pelos seus nomes ($\$t1$, $\$sp$, $\$ra$). Dois registradores especiais são reservados e não podem ser diretamente acessados: $Lo$ e $Hi$, usados para operações com pontos flutuantes e de multiplicação e divisão.
+
+Convencionalmente, os registradores são organizados por uso e por comportamento esperado conforme o quadro abaixo:\\
+
+\begin{table}[H]
+  \centering
+  \caption{Registradores}
+	\label{tab:registradores}
+  \begin{tabu} to 1.0\textwidth {|X[c,m]|X[c,m,$$]|X[-1,m]|}
+   \hline
+\textbf{Número do Registrador} & \textbf{Nome Alternativo} & \multicolumn{1}{c|}{\textbf{Descrição}} \\ \hline
+0 & \$zero & \vspace*{0.2cm} O valor \ 0 \vspace*{0.2cm} \\ \hline
+1 & \$at & \vspace*{0.2cm}(temporário assembler) -- reservado pelo assembler  \vspace*{0.2cm} \\ \hline
+2-3 & \$v0-\$v1 & \vspace*{0.2cm} (valores) --  Resultados de expressões e retornos de funções \vspace*{0.2cm} \\ \hline
+4-7 & \$a0-\$a3 & \vspace*{0.2cm} (argumentos) -- Primeiros quatro parâmetros de uma subrotina. Não são preservados entre chamadas de funções. \vspace*{0.2cm} \\ \hline
+8-15 & \$t0-\$t7 & \vspace*{0.2cm} (temporários) -- Salvos pelo escopo invocador, se necessário. Subrotinas podem usar sem salvar previamente. Não são preservados entre chamadas de funções. \vspace*{0.2cm} \\ \hline
+16-23 & \$s0-\$s7 & \vspace*{0.2cm} (valores salvos) -- Salvos pelo escopo invocado. Uma subrotina que use um destes registradores deve salvar o valor original e restaurá-lo antes de retornar. São preservados entre chamadas de funções. \vspace*{0.1cm} \\ \hline
+24-25 & \$t8-\$t9 & \vspace*{0.1cm} (temporários) -- Salvos pelo escopo invocador, se necessário. Subrotinas podem usar sem salvar previamente. Não são preservados entre chamadas de funções. \vspace*{0.2cm} \\ \hline
+26-27 & \$k0-\$k1 & \vspace*{0.2cm} Reservados para uso dos tratamentos de interrupções/exceções. \vspace*{0.2cm} \\ \hline
+28 & \$gp & \vspace*{0.2cm} Ponteiro global. Aponta para o meio do bloco (64kb) de memória no segmento de memória estática. \vspace*{0.2cm} \\ \hline
+29 & \$sp & \vspace*{0.2cm} Ponteiro de pilha. Aponta para a última posição em uso da pilha. \vspace*{0.2cm} \\ \hline
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabu} to 1.0\textwidth {|X[c,m]|X[c,m,$$]|X[-1,m]|}
+   \hline
+\textbf{Número do Registrador} & \textbf{Nome Alternativo} & \multicolumn{1}{c|}{\textbf{Descrição}} \\ \hline
+30 & \$s8/\$fp & \vspace*{0.2cm} Valor salvo/Ponteiro da moldura. É preservado entre chamadas de funções. \vspace*{0.2cm} \\ \hline
+31 & \$ra & \vspace*{0.2cm} Endereço de retorno. \vspace*{0.2cm}  \\ \hline   
+\end{tabu}
+\end{table}
+
+\section{Chamadas ao Sistema Operacional}
+
+O conjunto de instruções MIPS também prevê um conjunto de chamadas ao sistema operacional que podem ser invocadas através do comando $syscall$. Ao invocar o comando $syscall$, deve-se preencher alguns registradores de modo a indicar qual ação deve ser executada e quais são os argumentos para a ação. O registrador $\$v0$ indicará qual ação deve ser executada e possíveis argumentos são armazenados nos registradores $\$a0-\$a3$. Quando o sistema operacional executa a ação invocada pelo $syscall$, dependendo da ação, se gerar retorno, este pode ser armazenado nos registradores $\$v0$ e $\$v1$, dedicados a isso.
+
+As chamadas suportadas pelo simulador MARS, bem como quais argumentos são esperados e quais retornos são devolvidos estão listadas abaixo:\\
+
+\begin{table}[H]
+  \centering
+  \caption{Chamadas ao Sistema Operacional suportadas pelo MARS}
+	\label{tab:chamadas}
+  \begin{tabu} to 1.0\textwidth {|X[c,m]|X[c,m]|X[l,m]|X[l,m]|}
+   \hline
+\multicolumn{1}{|c}{\textbf{Função}} & 
+\multicolumn{1}{|c}{\textbf{Código em \$v0}} & 
+\multicolumn{1}{|c}{\textbf{Argumentos}} & 
+\multicolumn{1}{|c|}{\textbf{Resultado}}\\\hline
+\vspace*{0.2cm} Imprimir inteiro (integer) & 1 & \$a0 = inteiro a ser impresso &  \\ \hline
+\vspace*{0.2cm} Imprimir ponto flutuante (float) & 2 & \vspace*{0.2cm} \$f12 = ponto flutuante a ser impresso &  \\ \hline
+\vspace*{0.2cm} Imprimir ponto flutuante de precisão dupla (double) \vspace*{0.2cm} & 3 & \$f12 = ponto flutuante a ser impresso &  \\ \hline
+\vspace*{0.2cm} Imprimir cadeia de caracteres (string) \vspace*{0.2cm} & 4 & \vspace*{0.2cm} \$a0 = endereço da cadeia de caracteres terminada em null a ser impressa &  \\ \hline
+\vspace*{0.2cm} Ler inteiro da entrada padrão \vspace*{0.2cm} & 5 &  & \$v0 contém o inteiro lido \\ \hline
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabu} to 1.0\textwidth {|X[c,m]|X[c,m]|X[l,m]|X[l,m]|}
+   \hline
+\multicolumn{1}{|c}{\textbf{Função}} & 
+\multicolumn{1}{|c}{\textbf{Código em \$v0}} & 
+\multicolumn{1}{|c}{\textbf{Argumentos}} & 
+\multicolumn{1}{|c|}{\textbf{Resultado}}\\\hline
+\vspace*{0.2cm} Ler ponto flutuante da entrada padrão \vspace*{0.2cm} & 6 &  & \$f0 contém o ponto flutuante lido \\ \hline
+\vspace*{0.2cm} Ler ponto flutuante de dupla precisão da entrada padrão \vspace*{0.2cm} & 7 &  & \$f0 contém o ponto flutuante lido \\ \hline
+Ler cadeia de caracteres da entrada padrão & 8 & \vspace*{0.2cm} \$a0 = endereço do buffer de entrada \newline \$a1 = quantidade máxima de caracteres a serem lidos \vspace*{0.2cm} & Ver notas abaixo \\ \hline
+sbrk (alocar memória da pilha) & 9 & \vspace*{0.2cm} \$a0 = quantidade de bytes a serem alocados \vspace*{0.2cm} & \$v0 contém o endereço da memória alocada   \\ \hline
+\vspace*{0.2cm} Sair (terminar execução) \vspace*{0.2cm}& 10 &  &  \\ \hline
+Imprimir caractere (char) & 11 & \vspace*{0.2cm} \$a0 = caractere a ser impresso \vspace*{0.2cm} & Veja notas abaixo \\ \hline
+\vspace*{0.2cm} Ler caractere da entrada padrão \vspace*{0.2cm} & 12 &  & \$v0 contém o caractere lido \\ \hline
+Abrir arquivo & 13 & \vspace*{0.2cm} \$a0 = endereço da cadeia de caracteres terminadas em null contendo o caminho do arquivo \newline \$a1 = flags \newline \$a2 = modo de abertura \vspace*{0.2cm} & \$v0 contém o descritor do arquivo (ponteiro –negativo se falhar). \newline Veja notas abaixo \\ \hline
+Ler do arquivo & 14 & \vspace*{0.2cm} \$a0 = descritor do arquivo \newline \$a1 = endereço do buffer de entrada \newline \$a2 = quantidade máxima de caracteres a serem lidos \vspace*{0.2cm} & \$v0 contém a quantidade de caracteres lidos (0 se final de arquivo; negativo se falhar) \\ \hline
+Escrever em arquivo & 15 & \vspace*{0.2cm} \$a0 = descritor do arquivo \newline \$a1 = endereço do buffer de entrada\$a2 = quantidade máxima de caracteres a serem lidos \vspace*{0.2cm} & \$v0 contém a quantidade de caracteres lidos (negativo se falhar) \\ \hline
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \begin{tabu} to 1.0\textwidth {|X[c,m]|X[c,m]|X[l,m]|X[l,m]|}
+   \hline
+\multicolumn{1}{|c}{\textbf{Função}} & 
+\multicolumn{1}{|c}{\textbf{Código em \$v0}} & 
+\multicolumn{1}{|c}{\textbf{Argumentos}} & 
+\multicolumn{1}{|c|}{\textbf{Resultado}}\\\hline
+Fechar arquivo & 16 & \vspace*{0.2cm} \$a0 = descritor do arquivo \vspace*{0.2cm} &  \\ \hline
+\vspace*{0.2cm} Sair (terminar com valor) \vspace*{0.2cm} & 17 & \$a0 = resultado do término & Veja notas abaixo \\ \hline
+   \end{tabu}
+\end{table}
+\textbf{Notas:}\\
+
+\textbf{Função 8} -- Segue a semântica da função $fgets$ do UNIX. Para um determinado tamanho $n$, a cadeia de caracteres não pode ser superior a $n - 1$. Se menos do que isso, adiciona uma quebra de linha ao fim. Em qualquer caso, preenche com o $byte null$. Se $n = 1$, a entrada é ignorada e apenas o $byte null$ é armazenado no $buffer$. Se $n < 1$, a entrada é ignorada e nada é escrito no $buffer$.
+
+\textbf{Função 11} -- Imprime o caractere ASCII correspondente ao $byte$ de menor ordem.
+
+\textbf{Função 13} – O MARS implementa três valores de flags: 0 para `apenas leitura', 1 para `apenas escrita com criação' e 9 para `apenas escrita com criação e junção'. Essa função ignora o valor do modo. O descritor de arquivo retornado será negativo se a operação falhar. A implementação de entrada e saída de arquivos por baixo usa os métodos $java.io.FileInputStream.read()$ para ler e $java.io.FileOutputStream.write()$ para escrever. O MARS mantém descritores de arquivos internamente e os aloca começando com 3. Descritores 0, 1 e 2 estão sempre abertos para: ler da entrada padrão, escrever para a saída padrão, e escrever para a saída de erros padrão.
+
+\textbf{Função 17} – Se o programa MIPS é executado sob controle da interface gráfica MARS (GUI), o código de saída em $\$a0$ é ignorado.

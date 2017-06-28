@@ -1,0 +1,24 @@
+\documentclass[12pt, oneside, a4paper, english, brazil]{abntex2ppgsi}
+    
+% ELEMENTOS PRÉ-TEXTUAIS
+\include{./pretextual/pacotes}
+\include{./pretextual/config-macros}
+\include{./pretextual/capa-e-rosto}
+\include{./pretextual/config-pdf}
+\makeindex
+
+% ELEMENTOS TEXTUAIS
+\begin{document}
+    \include{./pretextual/pretextuais}
+	\include{./conteudo/01_introducao}
+    \include{./conteudo/02_conjunto-instrucoes}
+    \include{./conteudo/03_implementacao}
+    
+% ELEMENTOS PÓS-TEXTUAIS
+	\nocite{unicamp}
+    \nocite{obmep}
+    \nocite{wiki}
+    \nocite{reed}
+    \nocite{missouri}
+    \bibliography{./conteudo/referencias}
+\end{document}
