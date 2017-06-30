@@ -1,0 +1,18 @@
+\chapter{Introdução}
+
+O problema sorteado para a realização deste exercício-programa foi a obtenção de máximos divisores comuns (MDC) seguindo o algoritmo de Euclides. O problema divide-se em duas partes:
+
+\begin{itemize}
+\item Escrever uma função que receba dois números $a$ e $b$ como parâmetros e retorne o MDC deles;
+\item Escrever um programa que leia da entrada padrão um inteiro positivo $n$ e uma sequência de $n$ inteiros não-negativos e imprime o MDC de todos os números dados.\\
+\end{itemize}
+
+O algoritmo de Euclides para determinação de MDC é um dos algoritmos  mais antigos que se tem conhecimento (data de cerca de 300 anos A.C) e pode ser encontrado no Livro VII da obra Os Elementos, de Euclides. Ainda nos dias de hoje, o Algoritmo de Euclides é uma das maneiras mais simples e eficientes de se calcular MDC. O processo é também conhecido como processo das divisões sucessivas, pois é a partir de sucessivas divisões que ele é executado, e baseia-se no seguinte resultado:\\
+
+\begin{quote}
+Sejam $a$ e $b$ números naturais que, para evitar aborrecimentos desnecessários, suporemos $a > b > 0$. Se $q$ e $r$ são, respectivamente, o quociente e resto da divisão de $a$ por $b$, então $mdc(a, b) = mdc(b, r)$.\\
+\end{quote}
+
+Baseado na descrição acima, foi criado o programa em C que atenda as condições exigidas para a solução do problema. Em seguida, baseando-se no código em C, foi criado o programa em \textit{Assembly} correspondente seguindo o Conjunto de Instruções MIPS. O Conjunto de Instruções MIPS será descrito a seguir.
+
+Para desenvolvimento, testes e execução, usamos o simulador MARS, um versátil e leve ambiente de desenvolvimento interativo (IDE, no original) para a elaboração de programas seguindo a arquitetura MIPS. O \textit{software} foi desenvolvido pela Universidade Missouri State e disponibilizado gratuitamente para uso estudantil.

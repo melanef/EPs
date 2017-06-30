@@ -1,0 +1,41 @@
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX com abnTeX2 adaptado para o curso de SI da EACH-USP},
+		pdfkeywords=\palavraschavepdf,
+		% false: boxed links; true: colored links
+        colorlinks=true,
+        % color of internal links
+    	linkcolor=black,
+        % color of links to bibliography
+    	citecolor=black,
+        % color of file links
+    	filecolor=black,
+		urlcolor=black,
+		bookmarksdepth=4
+}
+
+\makeatother
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.25cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0cm}  % tente também \onelineskip
+\renewcommand{\baselinestretch}{1.5}
+
+% Controlar linhas orfas e viuvas
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty10000

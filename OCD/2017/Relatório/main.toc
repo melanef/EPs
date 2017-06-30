@@ -1,0 +1,14 @@
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\changetocdepth {2}
+\select@language {brazil}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{2}{chapter.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}O Conjunto de Instru\IeC {\c c}\IeC {\~o}es MIPS}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Formatos de Instru\IeC {\c c}\IeC {\~o}es}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Registradores dispon\IeC {\'\i }veis}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Chamadas ao Sistema Operacional}{6}{section.2.3}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}Implementa\IeC {\c c}\IeC {\~a}o}{9}{chapter.3}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Refer\^encias Bibliogr\'aficas}{14}{section*.2}

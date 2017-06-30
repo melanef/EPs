@@ -1,0 +1,71 @@
+This is BibTeX, Version 0.99d (TeX Live 2016/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+A level-1 auxiliary file: ./pretextual/pretextuais.aux
+A level-1 auxiliary file: ./conteudo/01_introducao.aux
+A level-1 auxiliary file: ./conteudo/02_conjunto-instrucoes.aux
+A level-1 auxiliary file: ./conteudo/03_implementacao.aux
+The style file: abntex2-alf.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Database file #1: abntex2-options.bib
+Database file #2: ./conteudo/referencias.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Warning--campo year vazio ou faltando em obmep
++---------------------------------------------------------+
+| Estilo bibliográfico abntex2-alf.bst versão v-1.9.6           |
+| Em caso de dúvidas ou problemas com este estilo procure |
+| http://www.abntex.net.br/                               |
++---------------------------------------------------------+
+You've used 7 entries,
+            6714 wiz_defined-function locations,
+            1231 strings with 10250 characters,
+and the built_in function-call counts, 12345 in all, are:
+= -- 1711
+> -- 90
+< -- 418
++ -- 494
+- -- 30
+* -- 670
+:= -- 1544
+add.period$ -- 29
+call.type$ -- 7
+change.case$ -- 39
+chr.to.int$ -- 7
+cite$ -- 7
+duplicate$ -- 1405
+empty$ -- 382
+format.name$ -- 138
+if$ -- 2325
+int.to.chr$ -- 0
+int.to.str$ -- 0
+missing$ -- 105
+newline$ -- 38
+num.names$ -- 30
+pop$ -- 145
+preamble$ -- 1
+purify$ -- 21
+quote$ -- 0
+skip$ -- 1520
+stack$ -- 1
+substring$ -- 559
+swap$ -- 482
+text.length$ -- 6
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 43
+width$ -- 0
+write$ -- 97
+(There was 1 warning)
