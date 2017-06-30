@@ -66,7 +66,7 @@ OP & LABEL
 Onde $OP$ corresponde ao código mnemônico da instrução e $LABEL$ é o endereço alvo para onde deve ocorrer o salto. Podemos tomar como exemplo a operação $j$:\\
 
 \begin{minted}{asm}
-j FIM
+	j FIM
 \end{minted}
 \end{itemize}
 \vspace{0.5cm}
@@ -170,6 +170,6 @@ Fechar arquivo & 16 & \vspace*{0.2cm} \$a0 = descritor do arquivo \vspace*{0.2cm
 
 \textbf{Função 11} -- Imprime o caractere ASCII correspondente ao $byte$ de menor ordem.
 
-\textbf{Função 13} – O MARS implementa três valores de flags: 0 para `apenas leitura', 1 para `apenas escrita com criação' e 9 para `apenas escrita com criação e junção'. Essa função ignora o valor do modo. O descritor de arquivo retornado será negativo se a operação falhar. A implementação de entrada e saída de arquivos por baixo usa os métodos $java.io.FileInputStream.read()$ para ler e $java.io.FileOutputStream.write()$ para escrever. O MARS mantém descritores de arquivos internamente e os aloca começando com 3. Descritores 0, 1 e 2 estão sempre abertos para: ler da entrada padrão, escrever para a saída padrão, e escrever para a saída de erros padrão.
+\textbf{Função 13} -- O MARS implementa três valores de flags: 0 para `apenas leitura', 1 para `apenas escrita com criação' e 9 para `apenas escrita com criação e junção'. Essa função ignora o valor do modo. O descritor de arquivo retornado será negativo se a operação falhar. A implementação de entrada e saída de arquivos por baixo usa os métodos $java.io.FileInputStream.read()$ para ler e $java.io.FileOutputStream.write()$ para escrever. O MARS mantém descritores de arquivos internamente e os aloca começando com 3. Descritores 0, 1 e 2 estão sempre abertos para: ler da entrada padrão, escrever para a saída padrão, e escrever para a saída de erros padrão.
 
-\textbf{Função 17} – Se o programa MIPS é executado sob controle da interface gráfica MARS (GUI), o código de saída em $\$a0$ é ignorado.
+\textbf{Função 17} -- Se o programa MIPS é executado sob controle da interface gráfica MARS (GUI), o código de saída em $\$a0$ é ignorado.

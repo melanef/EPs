@@ -1,5 +1,4 @@
-int main(const int argc, const char argv[])
-{
+int main(const int argc, const char argv[]) {
     int n, i, current_mdc = 0;
     int * numbers;
 

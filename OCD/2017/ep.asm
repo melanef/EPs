@@ -1,3 +1,11 @@
+#  Organização de Computadores Digitais
+#  Professora Doutora Gisele da Silva Craveiro
+#
+#  Alunos:
+#  Amauri de Melo Junior - 8516650
+#  Brenno Cremoini - 9778860
+
+
 .data
 quantity_message: .asciiz "Entre com a quantidade de numeros:\n"
 number_message:   .asciiz "Digite os numeros, um de cada vez:\n"
@@ -14,7 +22,7 @@ main:
 	syscall
 # carrega $v0 com o valor 5 para indicar ao syscall que a chamada ao SO desejada é ler inteiro da entrada padrão
 	li	$v0, 5
-# invoca syscall: lê um inteiro da entrada padrão	
+# invoca syscall: lê um inteiro da entrada padrão
 	syscall
 # copia o inteiro informado pelo usuário para o registrador $s0
 	la	$s0, ($v0)
@@ -32,7 +40,7 @@ main_loop:
 	beqz 	$s0, main_end
 #   carrega $v0 com o valor 5 para indicar ao syscall que a chamada ao SO desejada é ler inteiro da entrada padrão
 	li	$v0, 5
-#   invoca syscall: lê um inteiro da entrada padrão	
+#   invoca syscall: lê um inteiro da entrada padrão
 	syscall
 #   copia o conteúdo de $s1 (nosso MDC atual) para o registrador $a0 (arguemtno da subrotina mdc)
 	la	$a0, ($s1)

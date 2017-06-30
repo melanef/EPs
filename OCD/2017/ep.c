@@ -1,3 +1,12 @@
+/*
+  Organização de Computadores Digitais
+  Professora Doutora Gisele da Silva Craveiro
+
+  Alunos:
+  Amauri de Melo Junior - 8516650
+  Brenno Cremoini - 9778860
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 
