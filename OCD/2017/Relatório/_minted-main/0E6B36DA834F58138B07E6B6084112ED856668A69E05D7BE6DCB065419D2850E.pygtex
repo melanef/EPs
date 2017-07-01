@@ -1,0 +1,68 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+na}{.data}
+\PYG{n+nl}{quantity\PYGZus{}message:} \PYG{n+na}{.asciiz} \PYG{l+s}{\PYGZdq{}Entre com a quantidade de numeros:\PYGZbs{}n\PYGZdq{}}
+\PYG{n+nl}{number\PYGZus{}message:}   \PYG{n+na}{.asciiz} \PYG{l+s}{\PYGZdq{}Digite os numeros, um de cada vez:\PYGZbs{}n\PYGZdq{}}
+\PYG{n+nl}{result\PYGZus{}message:}	  \PYG{n+na}{.asciiz} \PYG{l+s}{\PYGZdq{}O resultado do MDC dos numeros informados é: \PYGZdq{}}
+
+\PYG{n+na}{.text}
+
+\PYG{n+nl}{main:}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 4 para indicar ao syscall que a chamada ao SO desejada é imprimir string}
+	\PYG{n+nf}{li} 	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{4}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}a0 com o endereço do buffer da mensagem a ser exibida}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{quantity\PYGZus{}message}
+\PYG{c}{\PYGZsh{} invoca syscall: imprimir a string contida no label \PYGZsq{}quantity\PYGZus{}message\PYGZsq{}}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 5 para indicar ao syscall que a chamada ao SO desejada é ler inteiro da entrada padrão}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{5}
+\PYG{c}{\PYGZsh{} invoca syscall: lê um inteiro da entrada padrão	}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{} copia o inteiro informado pelo usuário para o registrador \PYGZdl{}s0}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}s0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}s1 com o valor 0 \PYGZhy{}\PYGZhy{} \PYGZdl{}s1 será o registrador onde manteremos o MDC conforme for calculado a cada iteração}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}s1}\PYG{p}{,} \PYG{l+m+mi}{0}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 4 para indicar ao syscall que a chamada ao SO desejada é imprimir string}
+	\PYG{n+nf}{li} 	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{4}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}a0 com o endereço do buffer da mensagem a ser exibida}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{number\PYGZus{}message}
+\PYG{c}{\PYGZsh{} invoca syscall: imprimir a string contida no label \PYGZsq{}number\PYGZus{}message\PYGZsq{}}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{} loop: equivalente a um for}
+\PYG{n+nl}{main\PYGZus{}loop:}
+\PYG{c}{\PYGZsh{}   primeiro verificamos se o conteúdo de \PYGZdl{}s0 é zero, se for, pulamos para o fim do programa}
+	\PYG{n+nf}{beqz} 	\PYG{n+no}{\PYGZdl{}s0}\PYG{p}{,} \PYG{n+no}{main\PYGZus{}end}
+\PYG{c}{\PYGZsh{}   carrega \PYGZdl{}v0 com o valor 5 para indicar ao syscall que a chamada ao SO desejada é ler inteiro da entrada padrão}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{5}
+\PYG{c}{\PYGZsh{}   invoca syscall: lê um inteiro da entrada padrão	}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{}   copia o conteúdo de \PYGZdl{}s1 (nosso MDC atual) para o registrador \PYGZdl{}a0 (arguemtno da subrotina mdc)}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}s1}\PYG{p}{)}
+\PYG{c}{\PYGZsh{}   copia o inteiro informado pelo usuário para o registrador \PYGZdl{}a1 (argumento da subrotina mdc)}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{}   armazena nossa posição atual em \PYGZdl{}ra e salta para mdc para a execução da subrotina}
+	\PYG{n+nf}{jal}	\PYG{n+no}{mdc}
+\PYG{c}{\PYGZsh{}   copia o conteúdo de \PYGZdl{}v0 (resultado da subrotina mdc) para \PYGZdl{}s1 substituindo nosso MDC atual pelo novo calculado}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}s1}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{}   decrementa \PYGZdl{}s0 para representar o passo do loop}
+	\PYG{n+nf}{addi}	\PYG{n+no}{\PYGZdl{}s0}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}s0}\PYG{p}{,} \PYG{p}{\PYGZhy{}}\PYG{l+m+mi}{1}
+\PYG{c}{\PYGZsh{}   salta para o início do loop para nova iteração}
+	\PYG{n+nf}{j}	\PYG{n+no}{main\PYGZus{}loop}
+\PYG{c}{\PYGZsh{} fim: onde chegamos depois de ler e processar todos os números informados pelo usuário}
+\PYG{n+nl}{main\PYGZus{}end:}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 4 para indicar ao syscall que a chamada ao SO desejada é imprimir string}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{4}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}a0 com o endereço do buffer da mensagem a ser exibida}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{result\PYGZus{}message}
+\PYG{c}{\PYGZsh{} invoca syscall: imprimir a string contida no label \PYGZsq{}result\PYGZus{}message\PYGZsq{}}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 1 para indicar ao syscall que a chamada ao  SO desejada é imprimir inteiro}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{1}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}a0 com o valor de \PYGZdl{}s1, ou seja, o resultado calculado do MDC}
+	\PYG{n+nf}{la}	\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}s1}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} invoca syscall: imprimir o número que representa o MDC calculado}
+	\PYG{n+nf}{syscall}
+\PYG{c}{\PYGZsh{} carrega \PYGZdl{}v0 com o valor 10 para indicar ao syscall que a chamada ao SO desejada é fim de execução}
+	\PYG{n+nf}{li}	\PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{l+m+mi}{10}
+\PYG{c}{\PYGZsh{} invoca syscall: fim}
+	\PYG{n+nf}{syscall}
+\end{Verbatim}

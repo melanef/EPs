@@ -1,0 +1,15 @@
+\chapter{Implementação}
+
+A parte A do problema foi resolvida implementando a função recursiva abaixo em C, que reproduz o algoritmo de Euclides:\\
+
+\inputminted[frame=lines, framesep=2mm, baselinestretch=1.2, linenos, tabsize=4, 
+fontsize=\small]{c}{./documentos/euclides.c} 
+
+\newpage
+E seu código correspondente comentado em \textit{Assembly} MIPS:\\
+
+
+\inputminted[frame=lines, framesep=2mm, baselinestretch=1.2, linenos, tabsize=4, breaklines,
+fontsize=\small]{asm}{./documentos/euclides.asm}
+
+    A parte B do problema foi resolvida implementando a função main, ponto de entrada do programa, definida abaixo em C, que invoca a função MDC criada na parte A para obter o MDC dos números informados pelo usuário através da entrada padrão:

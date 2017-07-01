@@ -1,0 +1,51 @@
+\providecommand{\abntreprintinfo}[1]{%
+ \citeonline{#1}}
+\setlength{\labelsep}{0pt}\begin{thebibliography}{}
+\providecommand{\abntrefinfo}[3]{}
+\providecommand{\abntbstabout}[1]{}
+\abntbstabout{v-1.9.6 }
+
+\bibitem[Centoducatte 1998]{unicamp}
+\abntrefinfo{Centoducatte}{CENTODUCATTE}{1998}
+{CENTODUCATTE, P.~C. \emph{Conjunto de Instruções MIPS}. 1998.
+Dispon{\'\i}vel em:
+  \url{http://www.ic.unicamp.br/~pannain/mc542/aulas/ch3\_arq.pdf}. Acesso em:
+  20 jun. 2017.}
+
+\bibitem[Lin 2003]{umd}
+\abntrefinfo{Lin}{LIN}{2003}
+{LIN, C. \emph{Understanding the Stack}. 2003.
+Dispon{\'\i}vel em:
+  \url{https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Mips/stack.html}.
+  Acesso em: 20 jun. 2017.}
+
+\bibitem[{MISSOURI STATE UNIVERSITY} 2014]{missouri}
+\abntrefinfo{{MISSOURI STATE UNIVERSITY}}{{MISSOURI STATE UNIVERSITY}}{2014}
+{{MISSOURI STATE UNIVERSITY}. \emph{SYSCALL functions available in MARS}. 2014.
+Dispon{\'\i}vel em:
+  \url{http://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html}.
+  Acesso em: 20 jun. 2017.}
+
+\bibitem[OBMEP]{obmep}
+\abntrefinfo{OBMEP}{OBMEP}{}
+{OBMEP. \emph{Sala de Estudos: Algoritmo de Euclides para determinação de
+  MDC}.
+Dispon{\'\i}vel em:
+  \url{http://clubes.obmep.org.br/blog/sala-de-estudos-algoritmo-de-euclides-para-determinacao-de-mdc/}.
+  Acesso em: 20 jun. 2017.}
+
+\bibitem[Reed 2004]{reed}
+\abntrefinfo{Reed}{REED}{2004}
+{REED, D. \emph{MIPS Architecture and Assembly Language Overview}. 2004.
+Dispon{\'\i}vel em:
+  \url{http://logos.cs.uic.edu/366/notes/mips\%20quick\%20tutorial.htm}. Acesso
+  em: 20 jun. 2017.}
+
+\bibitem[{WIKIBOOKS} 2017]{wiki}
+\abntrefinfo{{WIKIBOOKS}}{{WIKIBOOKS}}{2017}
+{{WIKIBOOKS}. \emph{MIPS Assembly/Instruction Formats}. 2017.
+Dispon{\'\i}vel em:
+  \url{https://en.wikibooks.org/wiki/MIPS\_Assembly/Instruction\_Formats}.
+  Acesso em: 20 jun. 2017.}
+
+\end{thebibliography}

@@ -1,0 +1,55 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nl}{mdc:}
+\PYG{c}{\PYGZsh{} primeiro de tudo, salvamos o valor de ra na pilha (para saber de onde viemos)}
+    \PYG{n+nf}{addiu}    \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{p}{\PYGZhy{}}\PYG{l+m+mi}{4}
+    \PYG{n+nf}{sw}       \PYG{n+no}{\PYGZdl{}ra}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{(}\PYG{n+no}{\PYGZdl{}sp}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} agora podemos começar}
+\PYG{c}{\PYGZsh{}   o segundo parametro é zero? se sim, pula para o trecho que retorna o primeiro parametro}
+    \PYG{n+nf}{beqz}     \PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{n+no}{mdc\PYGZus{}retorna\PYGZus{}a0}
+\PYG{c}{\PYGZsh{}   os parametros são iguais? se sim, pula para o trecho que retorna o primeiro parametro}
+    \PYG{n+nf}{beq}      \PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{n+no}{mdc\PYGZus{}retorna\PYGZus{}a0}
+\PYG{c}{\PYGZsh{}   o primeiro parametro é menor do que o segundo? se sim, pula para o trecho que os inverte e chama mdc recursivamente}
+    \PYG{n+nf}{blt}      \PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{n+no}{mdc\PYGZus{}retorna\PYGZus{}mdc\PYGZus{}invertido}
+\PYG{c}{\PYGZsh{}   divide o primeiro parametro pelo segundo}
+    \PYG{n+nf}{div}      \PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}a1}
+\PYG{c}{\PYGZsh{}   copia o resto da divisão para a variável temporária t0}
+    \PYG{n+nf}{mfhi}     \PYG{n+no}{\PYGZdl{}t0}
+\PYG{c}{\PYGZsh{}   o valor de t0 é zero? se sim, significa que são múltiplos entre si, portanto pula para o trecho que retorna o segundo parametro}
+    \PYG{n+nf}{beqz}     \PYG{n+no}{\PYGZdl{}t0}\PYG{p}{,} \PYG{n+no}{mdc\PYGZus{}retorna\PYGZus{}a1}
+\PYG{c}{\PYGZsh{}   se não pulamos até aqui, o que resta é chamar mdc recursivamente, para isso, colocamos os novos parametros nas posicoes a0 e a1 e pulamos para o começo de mdc}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}a1}\PYG{p}{)}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}t0}\PYG{p}{)}
+    \PYG{n+nf}{jal}      \PYG{n+no}{mdc}
+\PYG{c}{\PYGZsh{} quando voltarmos, precisamos desempilhar o endereço e voltar, por isso, copiamos o que está no topo da pilha nesse instante para ra, movemos o ponteiro da pilha e pulamos para o ponto de ra}
+    \PYG{n+nf}{lw}       \PYG{n+no}{\PYGZdl{}ra}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{(}\PYG{n+no}{\PYGZdl{}sp}\PYG{p}{)}
+    \PYG{n+nf}{addiu}    \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{l+m+mi}{4}
+    \PYG{n+nf}{jr}       \PYG{n+no}{\PYGZdl{}ra}
+
+\PYG{n+nl}{mdc\PYGZus{}retorna\PYGZus{}mdc\PYGZus{}invertido:}
+\PYG{c}{\PYGZsh{} copia o valor do primeiro parametro para a variável temporária t0}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}t0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} copia o valor do segundo parametro para a variável de parameto a0}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}a0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}a1}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} copia o valor da variável temporária t0 para a variável de parametro a1}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}a1}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}t0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} pulamos para o começo de mdc}
+    \PYG{n+nf}{jal}      \PYG{n+no}{mdc}
+\PYG{c}{\PYGZsh{} quando voltarmos, precisamos desempilhar o endereço e voltar, por isso, copiamos o que está no topo da pilha nesse instante para ra, movemos o ponteiro da pilha e pulamos para o ponto de ra}
+    \PYG{n+nf}{lw}       \PYG{n+no}{\PYGZdl{}ra}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{(}\PYG{n+no}{\PYGZdl{}sp}\PYG{p}{)}
+    \PYG{n+nf}{addiu}    \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{l+m+mi}{4}
+    \PYG{n+nf}{jr}       \PYG{n+no}{\PYGZdl{}ra}
+\PYG{n+nl}{mdc\PYGZus{}retorna\PYGZus{}a0:}
+\PYG{c}{\PYGZsh{} armazenamos em v0 o valor do primeiro parametro, armazenado até então na variável de parametro a0}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}a0}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} desempilhamos o endereço para voltar e pulamos}
+    \PYG{n+nf}{lw}       \PYG{n+no}{\PYGZdl{}ra}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{(}\PYG{n+no}{\PYGZdl{}sp}\PYG{p}{)}
+    \PYG{n+nf}{addiu}    \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{l+m+mi}{4}
+    \PYG{n+nf}{jr}       \PYG{n+no}{\PYGZdl{}ra}
+\PYG{n+nl}{mdc\PYGZus{}retorna\PYGZus{}a1:}
+\PYG{c}{\PYGZsh{} armazenamos em v0 o valor do primeiro parametro, armazenado até então na variável de parametro a0}
+    \PYG{n+nf}{la}       \PYG{n+no}{\PYGZdl{}v0}\PYG{p}{,} \PYG{p}{(}\PYG{n+no}{\PYGZdl{}a1}\PYG{p}{)}
+\PYG{c}{\PYGZsh{} desempilhamos o endereço para voltar e pulamos}
+    \PYG{n+nf}{lw}       \PYG{n+no}{\PYGZdl{}ra}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{(}\PYG{n+no}{\PYGZdl{}sp}\PYG{p}{)}
+    \PYG{n+nf}{addiu}    \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{n+no}{\PYGZdl{}sp}\PYG{p}{,} \PYG{l+m+mi}{4}
+    \PYG{n+nf}{jr}       \PYG{n+no}{\PYGZdl{}ra}
+\end{Verbatim}
