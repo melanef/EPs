@@ -14,11 +14,10 @@ String * newString(int size)
 
 String * constructString(char * charArray, int size)
 {
-    int i, j, c;
+    int i, c = 0;
 
     for (i = 0; i < size; i++) {
-        j++;
-        if (charArray[i] == EOS) {
+        if (charArray[i] == EOS || charArray[i] == EOL) {
             break;
         }
 
@@ -30,6 +29,7 @@ String * constructString(char * charArray, int size)
     for (i = 0; i < c; i++) {
         string->chars[i] = charArray[i];
     }
+
 
     return string;
 }
@@ -56,11 +56,11 @@ char * copyCharArray(char * source, int size)
     return result;
 }
 
-String ** explode(CharList * separators, String * string)
+String ** explode(List * separators, String * string)
 {
     bool isSeparator;
     int begin = 0, quantity = 0, i, j;
-    CharNode * separator;
+    Node * separator;
     String ** strings;
 
     // Fase de contagem
@@ -70,12 +70,12 @@ String ** explode(CharList * separators, String * string)
         isSeparator = false;
         separator = separators->head;
         while (separator != NULL) {
-            if (c == separator->value) {
+            if (c == (char) separator->value) {
                 isSeparator = true;
                 break;
             }
 
-            separator = separator->prox;
+            separator = separator->next;
         }
 
         if (isSeparator) {
@@ -101,7 +101,7 @@ String ** explode(CharList * separators, String * string)
                 break;
             }
 
-            separator = separator->prox;
+            separator = separator->next;
         }
 
         if (isSeparator) {
@@ -143,7 +143,7 @@ char charAt(String * string, int position)
     return string->chars[position];
 }
 
-int length(char * charArray)
+int stringLength(char * charArray)
 {
     int c = 0;
     while (charArray[c++] != EOS) {}
@@ -159,7 +159,7 @@ String * substringFromString(String * source, int begin, int end)
         return NULL;
     }
 
-    if (!(end < source->length)) {
+    if (!(end <= source->length)) {
         return NULL;
     }
 
@@ -181,7 +181,7 @@ String * substringFromCharArray(char * source, int begin, int end)
         return NULL;
     }
 
-    if (!(end < length(source))) {
+    if (!(end < stringLength(source))) {
         return NULL;
     }
 

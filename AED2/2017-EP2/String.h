@@ -2,12 +2,13 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Lists.h"
+#include "List.h"
 
 #ifndef NEF_STRING
 #define NEF_STRING 1
 
 #define EOS '\0'
+#define EOL '\n'
 
 typedef struct String {
     char * chars;
@@ -22,7 +23,7 @@ char * asCharArray(String * source);
 
 char * copyCharArray(char * source, int size);
 
-String ** explode(CharList * separators, String * string);
+String ** explode(List * separators, String * string);
 
 void implode(String * separator, String ** strings);
 
@@ -30,7 +31,7 @@ String * concatStrings(String * string1, String * string2);
 
 char charAt(String * string, int position);
 
-int length(char * charArray);
+int stringLength(char * charArray);
 
 String * substringFromString(String * source, int begin, int end);
 

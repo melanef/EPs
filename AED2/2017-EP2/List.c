@@ -24,24 +24,46 @@ Node * nodeNew(int value)
 
 Node * nodeFind(List * list, int value)
 {
-    Node * currentNode = newList->head;
+    Node * currentNode = list->head;
     while (currentNode != NULL) {
-        if (currentNode->value = value) {
-            return currentNode;
+        if (currentNode->value == value) {
+            break;
         }
 
         currentNode = currentNode->next;
     }
 
-    return NULL;
+    return currentNode;
 }
 
 void listInsert(List * list, int value)
 {
-    if (findNode(list, value) == NULL) {
-        Node * newNode = newNode(value);
-        list->tail->next = newNode;
+    if (nodeFind(list, value) == NULL) {
+        Node * newNode = nodeNew(value);
+        if (list->tail != NULL) {
+            list->tail->next = newNode;
+        }
+
         list->tail = newNode;
+
+        if (list->head == NULL) {
+            list->head = newNode;
+        }
+
         list->quantity++;
     }
+}
+
+void listPrint(List * list)
+{
+    Node * currentNode = list->head;
+    while (currentNode != NULL) {
+        printf("%d", currentNode->value);
+        currentNode = currentNode->next;
+        if (currentNode != NULL) {
+            printf(" ");
+        }
+    }
+
+    printf("\n");
 }

@@ -1,5 +1,6 @@
 /* Lists.h */
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef NEF_LISTS
 #define NEF_LISTS 1
@@ -15,12 +16,14 @@ typedef struct list {
     int quantity;
 } List;
 
-List * newList();
+List * listNew();
 
-Node * newNode(int value);
+Node * nodeNew(int value);
 
-Node * findNode(List * list, int value);
+Node * nodeFind(List * list, int value);
 
-void insertList(List * list, int value);
+void listInsert(List * list, int value);
+
+void listPrint(List * list);
 
 #endif
