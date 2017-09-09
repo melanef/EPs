@@ -1,0 +1,312 @@
+---- Strategy -----
+
+* V1:	Primeira versão do JogoRPG. Aplica diretamente mecanismo de herança para
+	implementar diversos subtipos de Personagem.
+
+* V2:	Adição do comportamento lançar magia na classe Personagem (base da hierarquia
+	de classes). Subtipos de personagens que não devem lançar magia (como Barbaro) 
+	automaticamente herdam o comportamento, mesmo não sendo algo desejável. Uma 
+	alteração global gera muitos efeitos colaterais locais.
+
+* V3:	Solucionando o problema da V2 através da sobre escrita do método lancarMagia() 
+	da classe Barbaro para que não faça nada. Problema: sempre que um novo 
+	comportamento for adicionado à classe Personagem, deveremos inspecionar todas 
+	as subclasses de Personagem para verificar se o novo comportamento é ou não 
+	adequado e, caso não seja, neutralizá-lo através da sobre escrita do método 
+	referente ao novo comportamento.
+
+* V4:	Criação de interfaces para cada comportamento que pode variar entre os 
+	diferentes tipos de personagens (como atacar e lançar magia. Já andar
+	assumimos que é um comportamento estável). Os subtipos de personagem que 
+	devem ter determinado comportamento, alem de estender Personagem, devem 
+	implementar a interface de comportamento correspondente. Problema: código 
+	duplicado! Todos os subtipos de personagem que implementam o mesmo tipo de
+	ataque terão código duplicado nos métodos atacar(). A alteração na implementação
+	de um comportamento (ex: ataque) implica na inspeção de todas as subclasses 
+	de Personagem que possuem tal comportamento.
+
+* V5:	Aplicação do padrão Strategy. Separação do que muda daquilo que permanece
+	estável. O que muda é encapsulado para não afetar o restante do código da 
+	classe Personagem. Há uma interface para cada tipo de comportamento que pode
+	mudar, e diversas implementações concretas de comportamento para cada tipo de 
+	comportamento. O objeto Personagem possui referencias a objetos que implementam
+	os comportamentos que podem variar. As subclasses de Personagem apenas configuram 
+	os comportamentos da forma apropriada. A criação de novos tipos de comportamento
+	implica em alterações pontuais no código, e nenhum subtipo de Personagem irá 
+	receber um novo comportamento de forma automática. A modificação de uma 
+	implementação de comportamento também passa a ser pontual. Uma vantagem extra do
+	padrão Strategy é que os comportamentos podem ser alterados em tempo de execução.
+	Nas versões anteriores, uma vez compilado o código, era impossível alterar o 
+	comportamento de um personagem durante a execuçao do programa.
+
+---- Observer -----
+
+* V1:	Classe DadosMeteorologicos recebe dados da estação meteorologica. Sempre
+	que novos dados são recebidos, esta classe atualiza os objetos que implementam
+	as visualizações de dados. Nesta versão, existe uma ligação forte entre a classe
+	DadosMeteorologicos e as 3 classes que implementam as diferentes visualizações
+	(uma instancia de DadosMeteorologicos possui referencias para objetos que
+	implementam as visualizações). A criação de um novo tipo de visualização 
+	implica em alteração da classe DadosMeteorologicos. Ou seja, não é possível
+	adicionar elaborar novos tipos de visualização, sem alterar código que já
+	está pronto.
+
+* V2: 	Aplicação do padrão Observer. Cada objeto que deve ser atualizado quando
+	há uma mudança de estado no objeto observado (chamado de Subject) é um Observer. 
+	Criação	da interface Observer para que o subject não precise conhecer os tipos 
+	específicos de observadores, promovendo assim uma ligação fraca entre as classes
+	(a criação de um novo tipo de observador, não irá demandar modificação no 
+	subject). Também é criada a interface Subject, que define os servicos que um
+	objeto observável deve fornecer: mecanismo para que observadores possem ser
+	registrados ao subject; mecanismo para que observadores possam cancelar o
+	registro a um subject; notificação de todos observadores registrados quando
+	houver uma mudança de estado.
+
+	Ao aplicar o padrão Observer, podemos adicionar e remover observadores em
+	tempo de execução, algo impossível com a estrutura de classes usada em V1.
+
+	Esta versão V2 ilutra o mecanismo de notificação conhecido como PUSH (em que
+	o novo estado do subject é enviado aos observadores no instante da notificação).
+	Uma desvantagem do estilo PUSH de notificação é que se o conjunto de dados
+	que compoe o estado mudar, pode ser necessário modificar a interface Observer,
+	assim como todas as implementações de observadores.
+
+* V3:	Aplicação do padrão Observer usando notificação PULL. Neste estilo de 
+	notificação os próprios observadores puxam os dados do subject quando
+	notificados. A notificação em si não transmite dados de estado, e os 
+	observadores apenas puxam os dados que realmente são necessários. Usando
+	notificação PULL, mudanças no conjunto de dados que compoe o estado do 
+	subject não implicam em modificações da interface Observer e nem de todos os 
+	observadores (embora alguns possam ter que ser atualizadas). Uma desvantagem 
+	é que os observadores voltam a ter uma ligação forte com uma implementação 
+	concreta de Subject (embora isso seja muito menos crítico do que Subject ter 
+	ligações fortes com as implementações de Observer).
+
+	A escolha por um estilo ou outro de notificação deve ser baseada na expectativa
+	de mudança do conjunto de dados que determina o estado do subject. Se é esperado
+	que tal conjunto de dados mude com certa frequência, então a notificação PULL 
+	é mais adequada. Caso contrário, o recomendado é usar a notificação PUSH. Outra
+	questão a se considerar é que notificações do estilo PULL podem reduzir o volume
+	total de dados trocados entre o subject e os observadores (especialmente 
+	importante em arquiteturas distribuídas, onde subject e observadores "vivem"
+	em máquinas diferentes conectadas por conexão de rede ou internet).
+
+* V4:	Aplicação do padrão Observer usando classes e interfaces prontas na API
+	do Java (definidas no pacote java.util). A API Java permite implementar
+	notificações tanto no estilo PUSH quanto PULL. No exemplo da versão V4 é
+	usada a notificaçẽo estilo PULL.
+
+---- Iterator -----
+
+* V1: 	Implementação (simplificada) de uma Lista. Código cliente da Lista itera
+	pelos elementos da Lista usando conhecimento específico de como os dados
+	são armazenados internamente a Lista. Além da necessidade de saber como os
+	dados estão organizados dentro da Lista, o cliente ainda pode corromper o
+	estado da estrutura interna.
+
+* V2:	Classe Lista fornece métodos para permitir a iteração pelos seus elementos
+	sem expor a organização interna dos dados (estrutura interna protegida).
+	Problemas: a propria classe Lista mantem o estado da iteração em andamento
+	(através da variável index). 
+
+	Além de "inflar" a classe (que passa a ter duas responsabilidades: guardar 
+	elementos e fornecer meio de iteração), tal solução não permite a iteração
+	simultânea (mais de uma iteração ativa num dado instante, para o mesmo 
+	conjunto de dados). Imagine também as implicâncias de se adicionar novos 
+	estilos de iteração (em ordem reversa, etc), levando a classe Lista a ficar
+	ainda mais "inflada".
+
+* V3:	Aplicação parcial do padrão Iterator.
+
+	Separação da implementação da Lista do mecanismo de iteração. Vantagens: 
+	mais fácil de implementar novas estilos de iteração (em ordem reversa, etc); 
+	permite iteração simultânea. Desvantagens: cliente deve ter conhecimento sobre
+	a coleção com a qual está lidando, para instanciar o iterador apropriado 
+	(cliente deve saber quais implementações de iteradores combinam com quais 
+	implementações de coleções).
+
+* V4:	Aplicação completa do padrão Iterator. Definição das interfaces Coleção e
+	Iterator. Cliente só precisa conhecer as interfaces (no máximo precisa conhecer
+	as implementações das coleções para poder instanciar uma coleção). Classe
+	que implementa a Coleção é responsável por instanciar o iterador apropriado
+	quando requisitado pelo cliente (o método que instancia um iterador e o devolve
+	para o cliente é definido na interface Coleção).
+
+	Havendo uma interface comum para os todos iteradores, e sendo a própria coleção
+	a responsável por instanciar um iterador apropriado, o cliente não precisa
+	mais ter ligações fortes com as classes que implementam os iteradores.
+
+---- Decorator ----
+
+* V1:	Aplicação direta do mecanismo de herança para definir forma geométrica 
+	base (Shape) e subtipos (retângulo, triângulo, etc). Cada subtipo de forma 
+	define sua propria implementação dos métodos: draw() que implementa o desenho da 
+	forma em questão; getRadius() que devolve o raio do círculo circunscrito à forma
+	geométrica. Esta versão parace funcionar bem até que...
+
+* V2:	É necessário oferecer a possibilidade de desenhar as formas geométricas com
+	algumas opções de acabamento (desenho ponto que marca o centro da forma e
+	desenho do círculo circunscrito à forma). Se continuarmos usando o mecanismo 
+	de herança para modelar todas as combinações possíveis de formas e acabamentos
+	haverá uma explosão no número de classes. Além disso, a manutenção será bem
+	problemática. Imagine que uma nova forma (ou um novo acabemento) seja definido.
+	Qual será o impacto na manutenção do código existente? E se o comportamento de
+	desenho de uma forma (ou acabamento) tiver que ser atualizado. Qual será o 
+	impacto? Essa versão não permite ainda aplicar mais de um acabamento à mesma 
+	forma geométrica.
+
+* V3:	Para melhorar a versão anteior, são definidas variáveis de instância em Shape
+	para indicar se um acabamento deve (ou não) ser aplicado. A implementação do 
+	desenho de uma forma geométrica é distribúida em dois pontos: a superclasse 
+	implementa o desenho dos acabamentos, equanto as subclasses implementam o 
+	desenho da forma geométrica basica. Essa solução é um pouco melhor que a anterior 
+	pois previne a explosão no número de classes, além de permitir a aplicação de 
+	mais de um acabamento na mesma forma geométrica.
+
+	Ainda há, contudo, problemas com esta versão. Uma alteração na implementação
+	do desenho de um acabamento ainda irá implicar na alteração de código já 
+	existente (a superclasse Shape). A adição de novos tipos de acabamentos também.
+	Além disso, pode ser que nem todos os acabamentos disponíveis combinem com todas
+	as formas geométricas existentes. Mas todas as subclasses de Shape irão herdar 
+	todos os acabamentos disponíveis, mesmo se isso não fizer sentido (mais um
+	exemplo de comportamento herdado pelo mecanismo de herança, mas não desejado).
+	Esta solução também não permite a aplicação repetida do mesmo acabamento a uma
+	mesma forma geométrica (é verdade que no cenário do desenho de formas isso não 
+	faz muito sentido mesmo, mas em outros cenários a aplicação repetida de um
+	acabamento pode ser desejável).
+
+* V4:	Aplicação do padrão decorator, que visa estender as funcionalidades de um
+	objeto sem que sejam feitas quaisquer alterações no código do mesmo. Além
+	disso, a extensão é feita de forma dinâmica.
+
+	Neste padrão, decoradores e objetos decorados possuem o mesmo supertipo. 
+	Assim clientes podem manipular objetos "simples" e objetos "decorados" da
+	mesma forma. Um objeto decorador irá englobar um compomente que pode ser
+	tanto um objeto "simples", como um objeto já decorado. A estrutura de classes
+	definidas por este padrão permite adicionar múltiplos decoradores a um objeto.
+
+	No exemplo do desenho de formas geométricas, cada classe que implementa um 
+	acabamento é um decorador. A classe Shape define o supertipo comum, e cada 
+	forma geométrica básica (Retângulo e Triângulo) são compomentes concretos 
+	que podem ser decorados.
+
+---- Singleton ----
+
+* V1: 	Apresentação da clase Logger.
+
+* V2:	Apresenta problemas que ocorrem quando há mais de uma instância da classe
+	Logger. Tais problemas são ilustrados pela execução simultânea de duas threads,
+	sendo que cada thread instancia seu próprio objeto Logger.
+
+* V3:	Os problemas da versão anteior são solucionados pela criação de uma instância
+	de Logger, que fica disponível como atributo estático da classe Logger. Assim,
+	todos os clientes de Logger, ao invés de instanciarem sua própria instância,
+	devem usar essa instância previamente criada e disponível para todos.
+
+	Problemas: "clientes desavisados" ainda podem instanciar objetos do tipo Logger,
+	trazendo todos os problemas já conhecidos que ocorrem quando há mais de uma 
+	instância.
+
+* V4:	Aplicação do padrão Singleton. O construtor de Logger é protegido (declarado
+	como private), de modo que clientes não sejam capazes de instanciar objetos
+	deste tipo. Classe Logger gerencia a criação da única instancia de Logger e
+	fornce um ponto de acesso aos clientes através do método estático getLogger(). 
+	Neste exemplo a instanciação da única instancia de Logger é feita tardiamente,
+	ou seja, no momento em que getLogger() é chamado pela primeira vez. Observe 
+	ainda que, para evitar a execução simultânea do método getLogger(), que pode
+	acontecer em aplicações multi-thread, getLogger() é declarado como synchronized.
+
+* V5:	Aplicação do padrão Singleton, mas desta vez usando instanciação imediata (ao
+	invés de instanciação tardia).
+
+---- State --------
+
+* V1:	Código referente a uma software de controle de uma máquina automática de
+	venda de café. O cliente pode interagir com a máquina de 4 formas diferentes
+	(inserindo moedas, ejetando moedas, escolhendo bebida e abrindo tampa do
+	compartimento), mas a ação a ser executada irá dependender do estado atual no
+	qual a máquina se encontra (sem $$$, com $$$, preparando café e café pronto).
+
+	A gerência do estado da máquina é feita com uma variável int, e constantes
+	inteiras são utilizadas para representar os possíveis estado da máquina. As
+	implementações métodos que são invocados para cada uma das ações do usuário
+	estão repletos de cadeias de ifs e elses para verificar o estado em que a
+	máquina se encontra a executar a ação correta.
+
+* V2:	Aplicação do padrão State. Cada estado da máquina é modelado por uma classe
+	indepentente. A variável que mantem o estado da máquina é uma instância
+	de uma das classes que modelam os possíveis estados da máquina. Com este
+	padrão há uma melhor separação de código. Cada classe de estado possui apenas
+	o código referente ao seu estado. Os métodos que respondem às entradas do usuário
+	na classe MaquinaCafe simplesmente delegam as chamadas ao objeto que representa
+	o estado atual da máquina. As transições entre estados são implementadas dentro
+	das próprias classes que implementam os estados.
+	
+	Ao aplicar este padrão, a criação de novos estados e/ou alteração das regras 
+	que definem como a transição entre estados deve ocorrer implica em alterações
+	de código muito mais pontuais do que seria necessário se não estivessemos 
+	aplicando o padrão.
+
+---- Mediator --------
+
+* V1:	Implementação (simulada) de uma caixa de diálogo para seleção de cores e
+	aplicação da cor escolhida em algum objeto hipotético. A caixa de diálogo é
+	composta pelos seguintes componentes: 1) combobox (lista de opções) com cores 
+	disponíveis para serem escolhidas; 2) um campo de texto que indica a cor 
+	atualmente selecionada no combobox; 3) botao OK, que confirma a escolha da cor 
+	selecionada e a aplica ao objeto hipotético; e 4) botao CANCEL que cancela a 
+	escolha da cor.
+
+	O funcionamento do diálogo se dá pela interação destes 4 componentes. Sempre
+	que uma nova cor é selecionada no combobox, o campo de texto deve ter seu 
+	conteúdo atualizado para indicar a nova cor escolhida (neste caso existe uma
+	interação combobox ---> campo texto). Além disso, o botão OK que inicialmente 
+	encontra-se desabilitado só torna-se habilitado quando uma cor é selecionada 
+	no combobox pela primeira vez (interação combobox ---> botao). Quando OK é 
+	pressionado (estando habilidado) a cor atualmente selecionada no combobox é 
+	aplicada no objeto hipotético (interação botao ---> combobox). Por fim quando 
+	CANCEL é pressionado nenhuma operação é feita (não havendo interação entre os 
+	componentes do diálogo neste caso).
+
+	Para implementar as interações entre os componentes, alguns componentes
+	precisam manter referências a outros componentes do diálogo, tornando-os
+	fortemente acoplados. Isso é muito ruim pois, idealmente, gostaríamos que
+	os compomentes gráficos utilizados pudessem ser empregados na implementação
+	de qualquer caixa de diálogo. Entretanto, para que a lógica particular da
+	caixa de diálogo de seleção de cor pudesse ser implementada, foram definidas
+	relações entre os componentes que provavelmente só fazem sentido para este
+	diálogo específico, reduzindo drasticamente o potencial de reutilização
+	dos componentes (para criação futura de janelas de diálogos com propositos 
+	distintos).
+	
+* V2:	Emprego do padrão Mediator para melhorar a versão 1 do código que simula
+	a implementação das caixas de diálogo. A proposta é eliminar os relacionamemtos
+	diretos que existem entre os componentes, e estabelecer uma classe que será
+	a mediadora da interação entre os componentes. Todos os componentes
+	passarão a conhecer apenas o mediador. Este por sua vez conhece todos os
+	componentes e implementa as interações específicas que devem ocorrer entre 
+	os componentes para o funcionamento do diálogo de seleção de cor. De certa
+	forma, os componentes continuam interagindo entre si, mas de forma indireta
+	e gerenciada pelo mediador.
+
+	Desta forma, quando algum componente precisa executar alguma ação como
+	resposta à alguma interação do usuário, o componente notifica o mediador, que
+	por sua vez decide o que deve ser feito e interage com os demais componentes
+	a fim de executar a funcionalidade esperada.
+
+	Tomemos como exemplo o que acontece quando o método "setSelecionado" 
+	da classe Lista (que simula um combobox) é invocado como resposta à seleção
+	de uma cor por parte do usuário. Quando "setSelecionado" é executado, a única
+	ação tomada pela classe Lista é notificar o mediador de que alguma ação
+	aconteceu. O mediador por sua vez, ao ser notificado, atualiza o campo de texto
+	para exibir a cor atualmente selecionada na lista e também atualiza o botao OK
+	para que fique habilitado. Diferentemente do que ocorria na V1, a classe Lista
+	não mais interage diretamente com as classes CampoTexto e Botao, o que faz
+	com que seja possível reutilizá-la em diálogos que implementam funcionalidades
+	distintas. O mesmo vale para os demais componentes do exemplo.
+
+	O mediador, portanto, encapsula todo o comportamento coletivo de um conjunto
+	de componentes, específico a uma certa situação, enfraquecendo as ligações
+	diretas entre os componentes e favorecendo o reuso dos mesmos em outras
+	situações.
+	
