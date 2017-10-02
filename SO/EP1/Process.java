@@ -13,8 +13,9 @@ public class Process
     public static final String INSTRUCTION_ES = "E/S";
     public static final String INSTRUCTION_SAIDA = "SAIDA";
 
-    public static final String PARSE_EXCEPTION_MESSAGE_PREFIX = "Erro na interpretação do comando:\n";
-    public static final String INVALID_REGISTER_EXCEPTION_MESSAGE_PREFIX = "Não há registrador com o nome indicado no comando de atribuição:\n";
+    public static final int PROCESS_STATUS_AVAILABLE = 0;
+    public static final int PROCESS_STATUS_RUNNING = 1;
+    public static final int PROCESS_STATUS_BLOCKED = 2;
 
     private String name;
     private int x;
@@ -22,13 +23,16 @@ public class Process
     private int pc;
     private ArrayList<String> programInstructions;
     private int size;
-    private Pattern instructionPattern = Pattern.compile("([A-Z]=(\d+)");
+    private int status;
+    private int priority;
+    private int credits;
 
     public Process(String name)
     {
         this.pc = 0;
         this.name = name;
         this.size = 0;
+        this.status = Process.PROCESS_STATUS_AVAILABLE;
     }
 
     public Process(String name, ArrayList<String> programInstructions)
@@ -37,11 +41,23 @@ public class Process
         this.name = name;
         this.programInstructions = programInstructions;
         this.size = this.programInstructions.size();
+        this.status = Process.PROCESS_STATUS_AVAILABLE;
     }
 
     public String getName()
     {
         return this.name;
+    }
+
+    public int getPriority()
+    {
+        return this.priority;
+    }
+
+    public void setPriority(int priority)
+    {
+        this.priority = priority;
+        this.credits = priority;
     }
 
     public void run()
