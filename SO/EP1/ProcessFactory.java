@@ -8,7 +8,7 @@ import java.lang.String;
 import java.util.ArrayList;
 
 public class ProcessFactory {
-    public Process createProcess(String filePath)
+    public static Process createProcess(String filePath)
     {
         String name = "";
         ArrayList<String> instructions = new ArrayList<String>();
